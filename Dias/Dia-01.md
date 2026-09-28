@@ -394,11 +394,11 @@ git merge feature/dia-01-login
 2. Pon un **breakpoint** en `loginButtonTapped`, presiona el botón y en la consola LLDB escribe `po email` y `v password`. ¿Qué diferencia ves entre `po` y `v`?
 
 ## 🧠 Preguntas de repaso (respóndelas antes del Día 2)
-1. ¿Por qué los `IBOutlet` son `weak`? ¿Qué pasaría si fueran `strong`?
-2. ¿Qué diferencia hay entre `==` y `===`?
-3. ¿Por qué `EmailValidator` es `struct` y no `class`?
-4. ¿Qué ventaja tiene devolver `Result<String, EmailValidationError>` en vez de `Bool`?
-5. ¿En qué método del ciclo de vida harías una petición de red para refrescar datos cada vez que se muestra la pantalla?
+1. ¿Por qué los `IBOutlet` son `weak`? ¿Qué pasaría si fueran `strong`? - Por que la vista ya los retiene, existen despues del viewDidload
+2. ¿Qué diferencia hay entre `==` y `===`? Ambos comparar, pero es mas preciso los diferentes tipos de datos ===
+3. ¿Por qué `EmailValidator` es `struct` y no `class`? Ya que no usa referencia, y se puede usar fuera del hilo
+4. ¿Qué ventaja tiene devolver `Result<String, EmailValidationError>` en vez de `Bool`?, Saber exactamente, el correo validado, y que tipo de error te regresa si en dado caso existe
+5. ¿En qué método del ciclo de vida harías una petición de red para refrescar datos cada vez que se muestra la pantalla? - viewWillAppear de la vista
 
 ---
 **Próximo (Día 2):** fundamentos de Swift aplicados a Nexo: modelos `User` y `Post` (struct vs class, enums con valores asociados, `Codable`) y un JSON mock del Feed.

@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  LoginViewController.swift
 //  RoadmapSwift
 //
 //  Created by MMJ on 26/09/26.
@@ -57,7 +57,7 @@ final class LoginViewController: UIViewController {
     
     
     // MARK: - Acciones (patron TARGET-ACTION)
-    @IBAction private func logintButtonTapped(_ sender: UIButton) {
+    @IBAction private func loginButtonTapped(_ sender: UIButton) {
         view.endEditing(true) // Oculta el teclado
         
         //'text' es String? (Optional), guard let lo desenvuelve o sale.
@@ -81,7 +81,7 @@ final class LoginViewController: UIViewController {
     }
     
     @IBAction private func createAccountTapped(_ sender: UIButton){
-        print("➡️ Crear cuenat (lo haremos en el Dia 3")
+        print("➡️ Crear cuenta (lo haremos en el Dia 3")
     }
     
     // MARK: - Helpers
@@ -102,11 +102,11 @@ final class LoginViewController: UIViewController {
 // Separar cada conformnace en su propia extension es una convencion muy usada
 extension LoginViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == emailTextField {
+        if textField === emailTextField {
             passwordTextField.becomeFirstResponder()
         } else {
             textField.resignFirstResponder()
-            logintButtonTapped(loginButton)
+            loginButtonTapped(loginButton)
         }
         return true
     }

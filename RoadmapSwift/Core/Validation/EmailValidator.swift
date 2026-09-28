@@ -9,7 +9,7 @@ import Foundation
 
 /// Errores posibles al validar un email
 /// Equatable nos permite compararlos en los test con 'XCTAssertEqual'
-nonisolated enum EmailValidatiosError: Error, Equatable{
+nonisolated enum EmailValidationError: Error, Equatable{
     case empty
     case invalidFormat
     
@@ -27,7 +27,7 @@ nonisolated enum EmailValidatiosError: Error, Equatable{
 /// asi que es facil de testear y seguro de usar desde cualquier hilo
 nonisolated struct EmailValidator {
     /// Devuelve el email normalizado (sin espacio, en minusculas) o un error
-    func validate(_ email: String) -> Result<String, EmailValidatiosError>{
+    func validate(_ email: String) -> Result<String, EmailValidationError>{
         let trimmed = email.trimmingCharacters(in: .whitespacesAndNewlines)
         
         guard !trimmed.isEmpty else {
