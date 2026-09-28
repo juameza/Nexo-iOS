@@ -81,7 +81,7 @@ final class LoginViewController: UIViewController {
     }
     
     @IBAction private func createAccountTapped(_ sender: UIButton){
-        print("➡️ Crear cuenta (lo haremos en el Dia 3")
+        print("➡️ Crear cuenta (lo haremos en el Día 3)")
     }
     
     // MARK: - Helpers

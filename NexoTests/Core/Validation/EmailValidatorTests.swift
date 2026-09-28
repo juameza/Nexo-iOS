@@ -15,11 +15,11 @@ final class EmailValidatorTests: XCTestCase{
     private let sut = EmailValidator()
     
     // Convencion de nombre: test_<metodo>_<escenario>_<resultadoEsperado>
-    func test_validate_emptyString_returnEmptyError() {
+    func test_validate_emptyString_returnsEmptyError() {
         XCTAssertEqual(sut.validate(""), .failure(.empty))
     }
     
-    func test_validate_onlyWhitespaces_returnEmptyError() {
+    func test_validate_onlyWhitespaces_returnsEmptyError() {
         XCTAssertEqual(sut.validate("   \n "), .failure(.empty))
     }
     
