@@ -6,8 +6,19 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		A9ACF2A23069EEE100523878 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A964C9A23068BEAA00603C51 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A964C9A93068BEAA00603C51;
+			remoteInfo = RoadmapSwift;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		A964C9AA3068BEAA00603C51 /* RoadmapSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RoadmapSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9ACF29E3069EEE100523878 /* NexoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NexoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -29,10 +40,22 @@
 			path = RoadmapSwift;
 			sourceTree = "<group>";
 		};
+		A9ACF29F3069EEE100523878 /* NexoTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = NexoTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		A964C9A73068BEAA00603C51 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9ACF29B3069EEE100523878 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -46,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				A964C9AC3068BEAA00603C51 /* RoadmapSwift */,
+				A9ACF29F3069EEE100523878 /* NexoTests */,
 				A964C9AB3068BEAA00603C51 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -54,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				A964C9AA3068BEAA00603C51 /* RoadmapSwift.app */,
+				A9ACF29E3069EEE100523878 /* NexoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -83,6 +108,29 @@
 			productReference = A964C9AA3068BEAA00603C51 /* RoadmapSwift.app */;
 			productType = "com.apple.product-type.application";
 		};
+		A9ACF29D3069EEE100523878 /* NexoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A9ACF2A43069EEE100523878 /* Build configuration list for PBXNativeTarget "NexoTests" */;
+			buildPhases = (
+				A9ACF29A3069EEE100523878 /* Sources */,
+				A9ACF29B3069EEE100523878 /* Frameworks */,
+				A9ACF29C3069EEE100523878 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A9ACF2A33069EEE100523878 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				A9ACF29F3069EEE100523878 /* NexoTests */,
+			);
+			name = NexoTests;
+			packageProductDependencies = (
+			);
+			productName = NexoTests;
+			productReference = A9ACF29E3069EEE100523878 /* NexoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -95,6 +143,11 @@
 				TargetAttributes = {
 					A964C9A93068BEAA00603C51 = {
 						CreatedOnToolsVersion = 26.6;
+					};
+					A9ACF29D3069EEE100523878 = {
+						CreatedOnToolsVersion = 26.6;
+						LastSwiftMigration = 2660;
+						TestTargetID = A964C9A93068BEAA00603C51;
 					};
 				};
 			};
@@ -113,12 +166,20 @@
 			projectRoot = "";
 			targets = (
 				A964C9A93068BEAA00603C51 /* RoadmapSwift */,
+				A9ACF29D3069EEE100523878 /* NexoTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		A964C9A83068BEAA00603C51 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9ACF29C3069EEE100523878 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -135,7 +196,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A9ACF29A3069EEE100523878 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A9ACF2A33069EEE100523878 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A964C9A93068BEAA00603C51 /* RoadmapSwift */;
+			targetProxy = A9ACF2A23069EEE100523878 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		A964C9BE3068BEAB00603C51 /* Debug */ = {
@@ -321,6 +397,53 @@
 			};
 			name = Release;
 		};
+		A9ACF2A53069EEE100523878 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = V88G6QY5MQ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gs.NexoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "NexoTests/Core/Validation/NexoTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RoadmapSwift.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RoadmapSwift";
+			};
+			name = Debug;
+		};
+		A9ACF2A63069EEE100523878 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = V88G6QY5MQ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gs.NexoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "NexoTests/Core/Validation/NexoTests-Bridging-Header.h";
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RoadmapSwift.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RoadmapSwift";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -338,6 +461,15 @@
 			buildConfigurations = (
 				A964C9BE3068BEAB00603C51 /* Debug */,
 				A964C9BF3068BEAB00603C51 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A9ACF2A43069EEE100523878 /* Build configuration list for PBXNativeTarget "NexoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9ACF2A53069EEE100523878 /* Debug */,
+				A9ACF2A63069EEE100523878 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
