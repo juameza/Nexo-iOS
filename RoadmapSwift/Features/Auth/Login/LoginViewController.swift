@@ -81,7 +81,23 @@ final class LoginViewController: UIViewController {
     }
     
     @IBAction private func createAccountTapped(_ sender: UIButton){
-        print("➡️ Crear cuenta (lo haremos en el Día 3)")
+        // ⚠️ TEMPORAL (Día 2): solo para ver el feed en consola. Lo quitamos en el Día 3.
+        do {
+            let posts = try MockFeedLoader().load()
+            for post in posts {
+                // 🟢 Swift 5.9+: switch como expresión, asignado directo a una constante
+                let summary: String = switch post.content {
+                case .text(let text): "📝 \(text)"
+                case .image(_, let caption): "🖼️ \(caption ?? "(sin descripción)")"
+                case .video(_, let duration): "🎬 video de \(Int(duration))"
+                case .unsupported(let type): " ? tipo no soportado: \(type)"
+                }
+                let verified = post.author.isVerified ? "✅" : "🚫"
+                print("\(post.author.handle)\(verified) - \(post.relativeCreatedAt) - ♥️ \(post.likeCount)\n \(summary)")
+            }
+        } catch {
+            print("❌ \(error)")
+        }
     }
     
     // MARK: - Helpers

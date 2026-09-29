@@ -481,3 +481,9 @@ Cada día pide: **"Día N"** y recibirás:
 - Crear en `Main.storyboard` la pantalla de **Login** con Auto Layout y `UIStackView`
 - Conectar `IBOutlet`s/`IBAction`s
 - Primer test XCTest: `EmailValidatorTests`
+
+### Día 2 → ver [`Dias/Dia-02.md`](Dias/Dia-02.md)
+- Modelos `User`, `Post` y `PostContent` (struct vs class, enums con valores asociados)
+- `Codable` con `CodingKeys`, `init(from:)` manual y snake_case
+- `feed.json` mock + `MockFeedLoader` con `throws`
+- 11 tests nuevos con fixtures (18 en total)
