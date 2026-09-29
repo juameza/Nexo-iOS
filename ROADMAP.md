@@ -474,6 +474,7 @@ Cada día pide: **"Día N"** y recibirás:
 3. 💻 Qué codificar en Nexo (archivos concretos)
 4. 🧪 Test a escribir
 5. ✅ Checklist / reto extra
+6. 📊 Calificación al revisar tu trabajo → ver [`Dias/Progreso.md`](Dias/Progreso.md)
 
 ### Día 1 ✅ → ver [`Dias/Dia-01.md`](Dias/Dia-01.md)
 - Renombrar/estructurar el proyecto actual `RoadmapSwift` como Nexo (carpetas: `App`, `Features`, `Core`, `Resources`)
@@ -482,7 +483,7 @@ Cada día pide: **"Día N"** y recibirás:
 - Conectar `IBOutlet`s/`IBAction`s
 - Primer test XCTest: `EmailValidatorTests`
 
-### Día 2 → ver [`Dias/Dia-02.md`](Dias/Dia-02.md)
+### Día 2 ✅ → ver [`Dias/Dia-02.md`](Dias/Dia-02.md)
 - Modelos `User`, `Post` y `PostContent` (struct vs class, enums con valores asociados)
 - `Codable` con `CodingKeys`, `init(from:)` manual y snake_case
 - `feed.json` mock + `MockFeedLoader` con `throws`
