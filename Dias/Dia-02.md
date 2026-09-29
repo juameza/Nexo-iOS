@@ -645,11 +645,11 @@ git merge feature/dia-02-models
 3. **Formato de números:** agrega a `Post` una computed property `formattedLikes` que muestre `1.2 K` para 1200, usando `likeCount.formatted(.number.notation(.compactName))` 🟢.
 
 ## 🧠 Preguntas de repaso (respóndelas antes del Día 3)
-1. ¿Qué pasa si declaras `let post = Post.fixture()` y llamas a `post.toggleLike()`? ¿Por qué?
-2. ¿Cuál es la diferencia entre `decode` y `decodeIfPresent`? ¿Cuándo usarías cada uno?
-3. ¿Por qué existe el caso `.unsupported` en lugar de lanzar un error cuando llega un tipo desconocido? Piensa en una app que ya está en la App Store.
-4. Si `User` fuera una `class`, ¿qué problema podría aparecer al pasarlo a varias pantallas que lo modifican?
-5. ¿Por qué los fixtures usan una fecha fija en lugar de `Date()`?
+1. ¿Qué pasa si declaras `let post = Post.fixture()` y llamas a `post.toggleLike()`? ¿Por qué? No se.
+2. ¿Cuál es la diferencia entre `decode` y `decodeIfPresent`? ¿Cuándo usarías cada uno? Decode es cuando estas seguro que trae un dato el servidor, y decodeIfPresente es cuando no sabes, asi que esa variable es opcional
+3. ¿Por qué existe el caso `.unsupported` en lugar de lanzar un error cuando llega un tipo desconocido? Piensa en una app que ya está en la App Store. En caso que esl servidor envie un caso que no tengamos sensado en nuestro modelo y asi no crashea la app
+4. Si `User` fuera una `class`, ¿qué problema podría aparecer al pasarlo a varias pantallas que lo modifican?, que haria varias refencias, y por lo tanto si esa referencia cambia, en las demas referencias se veria ese cambio.
+5. ¿Por qué los fixtures usan una fecha fija en lugar de `Date()`? ya que los test no deberiasn de depender del reloj, ademas el round trip fallaria, ya que ISO 8601 no guarda milisegundos.
 
 ---
 **Próximo (Día 3):** pantalla de **Registro** en Storyboard con **segues** (`show`, `present`, `prepare(for:sender:)`, *unwind segues*) 🟤 vs navegación por código 🟢, validación del formulario (reutilizando `EmailValidator`) y un `PasswordValidator`.

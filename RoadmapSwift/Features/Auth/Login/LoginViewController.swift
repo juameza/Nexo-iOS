@@ -89,7 +89,7 @@ final class LoginViewController: UIViewController {
                 let summary: String = switch post.content {
                 case .text(let text): "📝 \(text)"
                 case .image(_, let caption): "🖼️ \(caption ?? "(sin descripción)")"
-                case .video(_, let duration): "🎬 video de \(Int(duration))"
+                case .video(_, let duration): "🎬 video de \(Int(duration))s"
                 case .unsupported(let type): " ? tipo no soportado: \(type)"
                 }
                 let verified = post.author.isVerified ? "✅" : "🚫"

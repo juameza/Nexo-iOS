@@ -30,7 +30,7 @@ nonisolated struct Post: Codable, Identifiable, Hashable, Sendable{
     }
 }
 
-/// La forma de la respuesta del servidor: {"post": [....]}
+/// La forma de la respuesta del servidor: {"posts": [....]}
 nonisolated struct FeedResponse: Decodable, Sendable {
     let posts: [Post]
 }

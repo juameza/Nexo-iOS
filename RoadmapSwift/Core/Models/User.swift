@@ -29,7 +29,7 @@ nonisolated struct User: Codable, Identifiable, Hashable, Sendable{
     
     /// Solo hace falta porque 'avatarURL' no coincide con lo que genera .convertFromSnakeCase
     /// ("avatar_url" -> "avatarUrl") Si declaras CodingKeys, debes listar TODAS las propiedades guardadas
-    enum CodinKeys: String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case id
         case username
         case displayName

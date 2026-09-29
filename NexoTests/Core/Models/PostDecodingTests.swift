@@ -1,5 +1,5 @@
 //
-//  PostDecondingTests.swift
+//  PostDecodingTests.swift
 //  NexoTests
 //
 //  Created by MMJ on 28/09/26.
@@ -8,7 +8,7 @@
 import XCTest
 @testable import RoadmapSwift
 
-final class PostDecondingTests: XCTestCase {
+final class PostDecodingTests: XCTestCase {
     private let decoder = JSONDecoder.nexo
     
     // throws en el test: si algo lanza un error, el test falla mostrando un error
@@ -25,18 +25,18 @@ final class PostDecondingTests: XCTestCase {
         XCTAssertEqual(content, .image(url: URL(string: "https://nexo.app/a.jpg")!, caption: nil))
     }
     
-    func test_decode_unknownType_returnsUnsupportes() throws {
+    func test_decode_unknownType_returnsUnsupported() throws {
         let json = #"{ "type": "poll", "question": "¿?" }"#
         let content = try decoder.decode(PostContent.self, from: Data(json.utf8))
         XCTAssertEqual(content, .unsupported(type: "poll"))
     }
     
-    func test_decode_videWithoutDuration_throwsError() {
+    func test_decode_videoWithoutDuration_throwsError() {
         let json = #"{ "type": "video", "url": "https://nexo.app/v.mp4"}"#
         XCTAssertThrowsError(try decoder.decode(PostContent.self, from: Data(json.utf8)))
     }
     
-    func test_decode_userWithSnakeCaseAndMissingBio_mapsField() throws {
+    func test_decode_userWithSnakeCaseAndMissingBio_mapsFields() throws {
         // Raw string multilines: #"""...""""#
         let json = #"""
         {
@@ -75,6 +75,20 @@ final class PostDecondingTests: XCTestCase {
             XCTAssertEqual(error as? FeedLoaderError, .fileNotFound("no_existe"))
         }
     }
+    
+    func test_decode_userWithAvatar_mapsAvatarURL() throws {
+        let json = #"""
+        { 
+            "id": "A0000000-0000-0000-0000-000000000009", 
+            "username": "ana",
+            "display_name": "Ana", 
+            "avatar_url": "https://nexo.app/ana.jpg", 
+            "is_verified": false 
+        }
+        """#
+        let user = try decoder.decode(User.self, from: Data(json.utf8))
+        XCTAssertEqual(user.avatarURL, URL(string: "https://nexo.app/ana.jpg"))
+    }
 }
 
 final class PostTests: XCTestCase {
@@ -101,6 +115,8 @@ final class PostTests: XCTestCase {
         XCTAssertEqual(original.likeCount, 0)
         XCTAssertEqual(copy.likeCount, 1)
     }
+    
+    
 }
 
 // MARK: - Fixtures

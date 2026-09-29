@@ -11,7 +11,7 @@ import Foundation
 // Errores propios del loader: más claros que los errores genéricos del sistema
 nonisolated enum FeedLoaderError: Error, Equatable {
     case fileNotFound(String)
-    case decondingFailed(String)
+    case decodingFailed(String)
 }
 
 
@@ -37,7 +37,7 @@ nonisolated struct MockFeedLoader {
             return try JSONDecoder.nexo.decode(FeedResponse.self, from: data).posts
         } catch {
             // String(describing:) conserva el detalle: QUÉ llave faltó y en QUÉ posición
-            throw FeedLoaderError.decondingFailed(String(describing: error))
+            throw FeedLoaderError.decodingFailed(String(describing: error))
         }
     }
 }
