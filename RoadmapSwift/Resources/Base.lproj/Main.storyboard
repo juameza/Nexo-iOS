@@ -121,7 +121,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES" textContentType="new-password"/>
                                         <connections>
-                                            <action selector="passwordChanged:" destination="lD8-d9-m6e" eventType="editingDidEnd" id="bq5-im-rsg"/>
+                                            <action selector="passwordChanged:" destination="lD8-d9-m6e" eventType="editingChanged" id="QFA-Lf-XpG"/>
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="Confirmar contraseña" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qD2-u9-HdD">

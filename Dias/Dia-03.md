@@ -586,14 +586,14 @@ final class RegisterViewControllerTests: XCTestCase {
 ---
 
 ## ✅ Checklist del día
-- [ ] Al tocar "Crear cuenta" se abre Registro con **push** (botón "atrás" arriba)
-- [ ] El email del Login aparece en Registro
-- [ ] Las reglas cambian a ✅ mientras escribes la contraseña
-- [ ] Cada error del formulario muestra su mensaje
-- [ ] Al registrarte regresas al Login con el email en minúsculas y un mensaje verde
-- [ ] Ya no existe `createAccountTapped` ni en el código ni en el storyboard
-- [ ] 32 tests en verde
-- [ ] Revisaste el `git diff` antes del commit
+- [✅] Al tocar "Crear cuenta" se abre Registro con **push** (botón "atrás" arriba)
+- [❌] El email del Login aparece en Registro
+- [❌] Las reglas cambian a ✅ mientras escribes la contraseña-me da el estatus cuando me cambio de campo
+- [✅] Cada error del formulario muestra su mensaje
+- [❌] Al registrarte regresas al Login con el email en minúsculas y un mensaje verde
+- [✅] Ya no existe `createAccountTapped` ni en el código ni en el storyboard
+- [✅] 32 tests en verde
+- [⚠️] Revisaste el `git diff` antes del commit- si pero no me mando nada o no supe revisar
 
 ## 🔥 Reto extra (opcional, +5 puntos)
 1. **🔁 Migración segue → `creator:` (🟢 iOS 13+).** Cambia `prefilledEmail` a `private let`, agrega a `RegisterViewController`:
@@ -610,7 +610,7 @@ final class RegisterViewControllerTests: XCTestCase {
 4. **Nueva regla.** Agrega `case symbol` ("Al menos un símbolo") a `PasswordRule`. ¿Qué tests se rompen y por qué? Arréglalos.
 
 ## 🧠 Preguntas de repaso (respóndelas antes del Día 4)
-1. ¿Por qué `delegate` es `weak` y el protocolo es `: AnyObject`? ¿Qué pasaría si fuera `strong`?
+1. ¿Por qué `delegate` es `weak` y el protocolo es `: AnyObject`? ¿Qué pasaría si fuera `strong`? - Esto debo de estudiarlo mas, no lo se
 2. ¿Por qué con segues `prefilledEmail` tiene que ser `var` opcional? ¿Cómo lo resuelve `instantiateViewController(identifier:creator:)`?
 3. ¿Qué ganamos al poner la validación en `RegistrationForm` en lugar de dentro de `registerButtonTapped`?
 4. ¿Por qué `RegisterViewController` no hace `popViewController` él mismo y se lo deja al Login?

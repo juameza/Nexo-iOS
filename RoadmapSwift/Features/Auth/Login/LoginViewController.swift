@@ -86,7 +86,7 @@ final class LoginViewController: UIViewController {
     // MARK: - Navegación (🟤 Segues)
     // Los identificadores en un solo lugar: un typo en un String no lo detecta el compilador
     private enum SegueID {
-        static let showRegister = "howRegister"
+        static let showRegister = "showRegister"
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

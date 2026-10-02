@@ -20,15 +20,15 @@ nonisolated enum PasswordRule: CaseIterable, Equatable, Sendable {
     // Texto para mostrar al usuario
     var message: String {
         switch self {
-        case .minLength: "Minimo \(Self.minimumLength) caracteres"
-        case .uppercase: "Al menos una mayuscula"
+        case .minLength: "Mínimo \(Self.minimumLength) caracteres"
+        case .uppercase: "Al menos una mayúscula"
         case .number: "Al menos un número"
         }
     }
     
     
     // Cada regla sabe validarse a si misma.
-    func isSatified(by password: String) -> Bool {
+    func isSatisfied(by password: String) -> Bool {
         switch self {
             // count cuenta CARACTERES, que ve el usuario (👍 = 1), no bytes
         case .minLength: password.count >= Self.minimumLength
@@ -43,6 +43,6 @@ nonisolated enum PasswordRule: CaseIterable, Equatable, Sendable {
 nonisolated struct PasswordValidator {
     // Devuelve las reglas que NO se cumplen. Un arreglo vacio significa valida
     func failedRules(for password: String) -> [PasswordRule] {
-        PasswordRule.allCases.filter { rule in !rule.isSatified(by: password)}
+        PasswordRule.allCases.filter { rule in !rule.isSatisfied(by: password)}
     }
 }
