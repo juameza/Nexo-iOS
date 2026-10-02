@@ -69,7 +69,7 @@
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="¿No tienes cuenta? Crear cuenta"/>
                                         <connections>
-                                            <action selector="createAccountTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mAR-ZF-CX9"/>
+                                            <segue destination="lD8-d9-m6e" kind="show" identifier="showRegister" id="tLW-7h-c1J"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -94,6 +94,86 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="999.23664122137404" y="-51.408450704225352"/>
+        </scene>
+        <!--Register View Controller-->
+        <scene sceneID="WQi-lj-wFH">
+            <objects>
+                <viewController storyboardIdentifier="RegisterViewController" id="lD8-d9-m6e" customClass="RegisterViewController" customModule="RoadmapSwift" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="L1Q-Dw-Ujd">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="zys-jB-V7H">
+                                <rect key="frame" x="24" y="196" width="345" height="243"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="Nombre" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4a1-xE-fYf">
+                                        <rect key="frame" x="0.0" y="0.0" width="345" height="32"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="next" textContentType="name"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="Correo electrónico" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SfK-DM-Cd8">
+                                        <rect key="frame" x="0.0" y="47" width="345" height="32"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" returnKeyType="next" textContentType="email"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="Contraseña" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8fs-LE-nTa">
+                                        <rect key="frame" x="0.0" y="94" width="345" height="27"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES" textContentType="new-password"/>
+                                        <connections>
+                                            <action selector="passwordChanged:" destination="lD8-d9-m6e" eventType="editingDidEnd" id="bq5-im-rsg"/>
+                                        </connections>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="Confirmar contraseña" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qD2-u9-HdD">
+                                        <rect key="frame" x="0.0" y="136" width="345" height="27"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="go" secureTextEntry="YES" textContentType="new-password"/>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reglas" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tHs-CE-QaZ">
+                                        <rect key="frame" x="0.0" y="178" width="345" height="15.666666666666657"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                        <color key="textColor" systemColor="secondaryLabelColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2A1-4D-3pY">
+                                        <rect key="frame" x="0.0" y="201.33333333333331" width="345" height="0.0"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                        <color key="textColor" systemColor="systemRedColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xhh-d9-5B0">
+                                        <rect key="frame" x="0.0" y="208.66666666666669" width="345" height="34.333333333333343"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="Crear cuenta"/>
+                                        <connections>
+                                            <action selector="registerButtonTapped:" destination="lD8-d9-m6e" eventType="touchUpInside" id="jVD-Vy-YpW"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="yfr-9P-xEq"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="yfr-9P-xEq" firstAttribute="trailing" secondItem="zys-jB-V7H" secondAttribute="trailing" constant="24" id="53b-cW-pD7"/>
+                            <constraint firstItem="zys-jB-V7H" firstAttribute="leading" secondItem="yfr-9P-xEq" secondAttribute="leading" constant="24" id="5Mm-Gt-xfl"/>
+                            <constraint firstItem="zys-jB-V7H" firstAttribute="top" secondItem="yfr-9P-xEq" secondAttribute="top" constant="24" id="xRr-KR-lUu"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="uRy-Yg-hoO"/>
+                    <connections>
+                        <outlet property="confirmPasswordTextField" destination="qD2-u9-HdD" id="9oG-n7-LhM"/>
+                        <outlet property="emailTextField" destination="SfK-DM-Cd8" id="tTO-mn-cJW"/>
+                        <outlet property="errorLabel" destination="2A1-4D-3pY" id="hAC-4t-Zpx"/>
+                        <outlet property="nameTextField" destination="4a1-xE-fYf" id="uQ7-OK-fHG"/>
+                        <outlet property="passwordTextField" destination="8fs-LE-nTa" id="eSk-5V-MDT"/>
+                        <outlet property="registerButton" destination="Xhh-d9-5B0" id="clZ-w1-J5S"/>
+                        <outlet property="rulesLabel" destination="tHs-CE-QaZ" id="avX-9u-EgU"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6xu-hR-bb8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1913.740458015267" y="-61.267605633802823"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="6kr-cA-iA0">

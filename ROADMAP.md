@@ -488,3 +488,9 @@ Cada día pide: **"Día N"** y recibirás:
 - `Codable` con `CodingKeys`, `init(from:)` manual y snake_case
 - `feed.json` mock + `MockFeedLoader` con `throws`
 - 11 tests nuevos con fixtures (18 en total)
+
+### Día 3 → ver [`Dias/Dia-03.md`](Dias/Dia-03.md)
+- Pantalla de **Registro** en Storyboard abierta con un segue `Show`
+- Pasar datos hacia adelante (`prepare(for:sender:)`) y hacia atrás (delegate propio `weak`)
+- `PasswordValidator` (`CaseIterable`, `filter`, `map`) y `RegistrationForm` testeable sin UI
+- 13 tests nuevos, incluido un test de humo del storyboard (32 en total)

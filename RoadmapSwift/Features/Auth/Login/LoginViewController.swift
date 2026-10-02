@@ -78,31 +78,29 @@ final class LoginViewController: UIViewController {
         }
         
         
+        
+        
     }
     
-    @IBAction private func createAccountTapped(_ sender: UIButton){
-        // ⚠️ TEMPORAL (Día 2): solo para ver el feed en consola. Lo quitamos en el Día 3.
-        do {
-            let posts = try MockFeedLoader().load()
-            for post in posts {
-                // 🟢 Swift 5.9+: switch como expresión, asignado directo a una constante
-                let summary: String = switch post.content {
-                case .text(let text): "📝 \(text)"
-                case .image(_, let caption): "🖼️ \(caption ?? "(sin descripción)")"
-                case .video(_, let duration): "🎬 video de \(Int(duration))s"
-                case .unsupported(let type): " ? tipo no soportado: \(type)"
-                }
-                let verified = post.author.isVerified ? "✅" : "🚫"
-                print("\(post.author.handle)\(verified) - \(post.relativeCreatedAt) - ♥️ \(post.likeCount)\n \(summary)")
-            }
-        } catch {
-            print("❌ \(error)")
-        }
+    
+    // MARK: - Navegación (🟤 Segues)
+    // Los identificadores en un solo lugar: un typo en un String no lo detecta el compilador
+    private enum SegueID {
+        static let showRegister = "howRegister"
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        guard segue.identifier == SegueID.showRegister, let register = segue.destination as? RegisterViewController else { return }
+        register.prefilledEmail = emailTextField.text
+        register.delegate = self // avisame a MI cuando se cree la cuenta
+    }
+ 
     
     // MARK: - Helpers
     private func showError(_ message: String){
         errorLabel.text = message
+        errorLabel.textColor = .systemRed
         errorLabel.isHidden = false
     }
     
@@ -111,6 +109,12 @@ final class LoginViewController: UIViewController {
         errorLabel.isHidden = true
     }
 
+    
+    private func showSuccess(_ message: String){
+        errorLabel.text = message
+        errorLabel.textColor = .systemGreen
+        errorLabel.isHidden =  false
+    }
 
 }
 
@@ -125,5 +129,17 @@ extension LoginViewController: UITextFieldDelegate {
             loginButtonTapped(loginButton)
         }
         return true
+    }
+}
+
+
+// MARK: - RegisterViewControllerDelegate
+extension LoginViewController: RegisterViewControllerDelegate {
+    func registerViewController(_ controller: RegisterViewController, didRegister account: NewAccount) {
+        emailTextField.text = account.email
+        passwordTextField.text = nil
+        showSuccess("¡Cuenta creada, \(account.displayName)! Ahora inicia sesión")
+        // Quien abre la pantalla es quien la cierra
+        navigationController?.popViewController(animated: true)
     }
 }
