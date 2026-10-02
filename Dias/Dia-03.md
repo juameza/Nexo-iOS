@@ -611,10 +611,10 @@ final class RegisterViewControllerTests: XCTestCase {
 
 ## 🧠 Preguntas de repaso (respóndelas antes del Día 4)
 1. ¿Por qué `delegate` es `weak` y el protocolo es `: AnyObject`? ¿Qué pasaría si fuera `strong`? - Esto debo de estudiarlo mas, no lo se
-2. ¿Por qué con segues `prefilledEmail` tiene que ser `var` opcional? ¿Cómo lo resuelve `instantiateViewController(identifier:creator:)`?
-3. ¿Qué ganamos al poner la validación en `RegistrationForm` en lugar de dentro de `registerButtonTapped`?
-4. ¿Por qué `RegisterViewController` no hace `popViewController` él mismo y se lo deja al Login?
-5. ¿Qué pasa si borras una `@IBAction` del código pero sigue conectada en el storyboard? ¿Cuándo te enterarías?
+2. ¿Por qué con segues `prefilledEmail` tiene que ser `var` opcional? ¿Cómo lo resuelve `instantiateViewController(identifier:creator:)`?, por que el usuario puede o no haber ingresado el correo, y asi no crashea la app
+3. ¿Qué ganamos al poner la validación en `RegistrationForm` en lugar de dentro de `registerButtonTapped`? que todo los IBOutlet esten conectados
+4. ¿Por qué `RegisterViewController` no hace `popViewController` él mismo y se lo deja al Login? por que el Login es quien lo abre, y es el quien debe cerrarlo
+5. ¿Qué pasa si borras una `@IBAction` del código pero sigue conectada en el storyboard? ¿Cuándo te enterarías? Crashea la app, hasta que se cargue la vista es cuando se enteraria, y te sale un error de selector no reconocido
 
 ---
 **Próximo (Día 4):** el **Feed** con `UITableView` 🟤: `UITableViewDataSource`/`Delegate`, celdas prototipo en el Storyboard, celda personalizada (`UITableViewCell` + outlets), `dequeueReusableCell` y por qué las celdas se **reciclan**, usando los posts de `MockFeedLoader`.

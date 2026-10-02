@@ -28,8 +28,9 @@ Cada día se califica **después** de revisar el código final (tras las correcc
 |---|---|---|---|---|---|---|---|---|
 | 1 | Login en Storyboard + `EmailValidator` | 30 | 15 | 13 | 16 | 0 | **74** | 👍 Bien |
 | 2 | Modelos, `Codable`, JSON mock | 31 | 18 | 11 | 18 | 0 | **78** | 👍 Bien |
+| 3 | Registro, segues, delegate, `PasswordValidator` | 30 | 19 | 12 | 11 | 0 | **72** | 👍 Bien |
 
-**Promedio:** 76 · **Tendencia:** ⬆️ subiendo
+**Promedio:** 75 · **Tendencia:** ⬇️ bajó por los conceptos
 
 ---
 
@@ -51,9 +52,18 @@ Cada día se califica **después** de revisar el código final (tras las correcc
 - **✨ Lo mejor:** corregiste **todo** lo señalado, incluidos los menores, y el razonamiento de P3–P5 es sólido.
 - **🎯 A reforzar:** semántica de `let`/`var` en structs; releer el código pegado (el compilador no detecta typos en strings ni en nombres de `CodingKeys`).
 
+### Día 3: 72/100 👍
+- **💻 Código 30/40:** `RegistrationForm`, `PasswordValidator` y el delegate quedaron bien. Restas: dos bugs funcionales, el typo `"howRegister"` (el email no llegaba y el delegate quedaba en `nil`) y `passwordChanged:` conectado a *Editing Did End*; además `isSatified` y textos sin acento. Todo quedó corregido.
+- **🧪 Tests 19/20:** 32/32 en verde y bien escritos. Resta menor: ningún test detectó los dos bugs (tampoco los pedía la guía).
+- **🌿 Git 12/15:** rama, commit y merge correctos, y la corrección se hizo en su propia rama `fix/`. Resta: no supiste usar `git diff` (no muestra lo que ya está en el *stage* ni los archivos nuevos).
+- **🧠 Conceptos 11/25:** P1 🔴 (`weak`/`AnyObject`) · P2 🟡 · P3 🔴 · P4 ✅ · P5 🟡
+- **✨ Lo mejor:** reportaste el checklist con honestidad (❌ incluidos) y describiste bien el síntoma ("cambia cuando me cambio de campo"), lo que llevó directo al bug.
+- **🎯 A reforzar:** gestión de memoria (ARC, `weak`, retain cycles); para qué sirve separar la lógica de la UI (testabilidad); `git diff --staged`.
+
 ---
 
 ## 🔁 Patrones a vigilar
-1. **Typos en nombres:** aparecieron los dos días. Hábito: antes del commit, corre `git diff` y lee cada nombre nuevo.
+1. **Typos en nombres:** aparecieron los tres días, y el Día 3 uno en un *String* rompió la funcionalidad. Hábito: `git add .` y luego `git --no-pager diff --staged`, leyendo cada nombre y cada String.
 2. **Copiar y pegar:** revisa lo pegado y no confíes solo en que compile.
 3. **Git:** haz commit **antes** de cambiar de rama.
+4. **Memoria (ARC):** `weak`, `strong` y retain cycles salieron dos veces (Día 1 P1 y Día 3 P1). Se refuerza en el Día 4.
