@@ -65,7 +65,7 @@
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain" title="0"/>
                                                     <connections>
-                                                        <action selector="likeButtonTapped:" destination="uHw-xd-yQE" eventType="touchUpInside" id="ZYW-hz-87p"/>
+                                                        <action selector="likeButtonTapped:" destination="uHw-xd-yQE" eventType="primaryActionTriggered" id="0Kh-52-ZaX"/>
                                                     </connections>
                                                 </button>
                                             </subviews>

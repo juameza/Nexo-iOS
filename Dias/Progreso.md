@@ -29,8 +29,9 @@ Cada día se califica **después** de revisar el código final (tras las correcc
 | 1 | Login en Storyboard + `EmailValidator` | 30 | 15 | 13 | 16 | 0 | **74** | 👍 Bien |
 | 2 | Modelos, `Codable`, JSON mock | 31 | 18 | 11 | 18 | 0 | **78** | 👍 Bien |
 | 3 | Registro, segues, delegate, `PasswordValidator` | 30 | 19 | 12 | 11 | 0 | **72** | 👍 Bien |
+| 4 | Feed con `UITableView`, ARC y test de memory leak | 31 | 19 | 13 | 11 | 0 | **74** | 👍 Bien |
 
-**Promedio:** 75 · **Tendencia:** ⬇️ bajó por los conceptos
+**Promedio:** 74.5 · **Tendencia:** ➡️ estable. El código y Git mejoran; los conceptos siguen siendo el área débil.
 
 ---
 
@@ -60,10 +61,20 @@ Cada día se califica **después** de revisar el código final (tras las correcc
 - **✨ Lo mejor:** reportaste el checklist con honestidad (❌ incluidos) y describiste bien el síntoma ("cambia cuando me cambio de campo"), lo que llevó directo al bug.
 - **🎯 A reforzar:** gestión de memoria (ARC, `weak`, retain cycles); para qué sirve separar la lógica de la UI (testabilidad); `git diff --staged`.
 
+### Día 4: 74/100 👍
+- **💻 Código 31/40:** el Feed funciona completo (4 posts, alto automático, ❤️, `poll` y navegación con `creator:`), el `[weak self]` está bien y el storyboard está correcto. Restas: punto `.` en lugar de `·` en `previewText` (lo detectó el test) y en `metaLabel` (ningún test lo detecta), `*` en lugar de `✓`, código comentado del experimento y métodos vacíos en el Login, botón ❤️ otra vez en *Touch Up Inside* y typos en comentarios (`Usam`, `Initiañ ViewContoller`).
+- **🧪 Tests 19/20:** 40/40 en verde. Comprobaste que el test de leak falla sin `[weak self]`. Resta menor: el test de `previewText` falló al principio por el typo.
+- **🌿 Git 13/15:** rama, commit y merge correctos, y usaste `diff --staged`. Resta: el código comentado del experimento entró en el commit, aunque el Paso 9 pedía revisarlo.
+- **🧠 Conceptos 11/25:** P1 🔴 (reciclaje) · P2 🟡 · P3 ✅ · P4 🔴 (sin respuesta) · P5 🟡
+- **✨ Lo mejor:** hiciste todos los experimentos (Memory Graph y test de leak que falla y pasa), y P3 (`weak` vs `unowned`) ya sale bien: avance real en ARC.
+- **🎯 A reforzar:** responder **todas** las partes de cada pregunta; reciclaje de celdas; inyección de dependencias; borrar el código de los experimentos antes del commit.
+
 ---
 
 ## 🔁 Patrones a vigilar
 1. **Typos en nombres:** aparecieron los tres días, y el Día 3 uno en un *String* rompió la funcionalidad. Hábito: `git add .` y luego `git --no-pager diff --staged`, leyendo cada nombre y cada String.
 2. **Copiar y pegar:** revisa lo pegado y no confíes solo en que compile.
 3. **Git:** haz commit **antes** de cambiar de rama.
-4. **Memoria (ARC):** `weak`, `strong` y retain cycles salieron dos veces (Día 1 P1 y Día 3 P1). Se refuerza en el Día 4.
+4. **Memoria (ARC):** `weak`, `strong` y retain cycles salieron dos veces (Día 1 P1 y Día 3 P1). En el Día 4 ya mejoró (P3 ✅), pero falta explicar la cadena completa del ciclo.
+5. **Preguntas incompletas:** en el Día 4 una quedó sin responder y otra respondió solo 1 de sus 3 partes. Contesta cada parte por separado.
+6. **Caracteres parecidos:** `.` en lugar de `·`, `*` en lugar de `✓`. Copia los símbolos de la guía.

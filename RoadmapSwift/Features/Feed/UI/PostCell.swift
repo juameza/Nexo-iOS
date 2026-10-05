@@ -18,10 +18,7 @@ final class PostCell: UITableViewCell {
     @IBOutlet private weak var bodyLabel: UILabel!
     @IBOutlet private weak var likeButton: UIButton!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-      //  print("🧱 Celda NUEVA creada")
-    }
+   
     
     // La celda NO sabe dar like: Solo Avisa "me tocaron" (igual que el delegate del Dia 3, pero con los closures)
     var onLikeTapped: (() -> Void)?

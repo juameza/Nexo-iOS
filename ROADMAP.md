@@ -495,7 +495,7 @@ Cada día pide: **"Día N"** y recibirás:
 - `PasswordValidator` (`CaseIterable`, `filter`, `map`) y `RegistrationForm` testeable sin UI
 - 13 tests nuevos, incluido un test de humo del storyboard (32 en total)
 
-### Día 4 → ver [`Dias/Dia-04.md`](Dias/Dia-04.md)
+### Día 4 ✅ → ver [`Dias/Dia-04.md`](Dias/Dia-04.md)
 - **Feed** con `UITableViewController` en un storyboard propio (`Feed.storyboard`), `PostCell` con outlets y alto automático
 - Reciclaje de celdas (`dequeueReusableCell`, `prepareForReuse`) y navegación con `instantiateInitialViewController(creator:)`
 - Protocolo `FeedLoader` para inyectar el loader (stub en tests)

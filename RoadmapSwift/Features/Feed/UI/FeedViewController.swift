@@ -48,8 +48,6 @@ final class FeedViewController: UITableViewController {
     private func loadFeed() {
         do {
             posts = try loader.load()
-           /* let loaded = try loader.load()
-            posts = (1...25).flatMap { _ in loaded }  // 100 posts (ids repetidos: NO toques ❤️ aquí)*/
             tableView.backgroundView = nil
         } catch {
             posts = []
@@ -93,7 +91,6 @@ final class FeedViewController: UITableViewController {
         // ⚠️ [weak self]: la celda (que vive dentro de NUESTRA table) guarda esta closure.
         // Sin weak la closure retendria al Feed -> retain cycle (Concepto 2)
         cell.onLikeTapped = { [weak self] in
-       // cell.onLikeTapped = {
             self?.toggleLike(postID: post.id)
         }
         

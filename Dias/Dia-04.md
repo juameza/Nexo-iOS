@@ -567,13 +567,13 @@ Un test que nunca falla no sirve de nada. Quita otra vez el `[weak self]` (como 
 ## ✅ Checklist del día
 - [✅ ] Al iniciar sesión se abre **Inicio** con los 4 posts
 - [ ✅] Las celdas tienen alto automático (el texto largo baja de línea y no se corta)
-- [ ] El post `poll` dice "Actualiza Nexo para ver esta publicación"
-- [ ] ❤️ cambia el color y el contador, y se puede quitar
-- [ ] Viste cuántas celdas se crean con 100 posts (Paso 7.2)
-- [ ] Viste el leak en el **Memory Graph** y desapareció con `[weak self]` (Paso 7.3)
-- [ ] `test_feed_isReleasedFromMemory` **falla** sin `[weak self]` y **pasa** con él (Paso 8.4)
-- [ ] 40 tests en verde
-- [ ] Revisaste `git --no-pager diff --staged` antes del commit
+- [✅ ] El post `poll` dice "Actualiza Nexo para ver esta publicación"
+- [ ✅] ❤️ cambia el color y el contador, y se puede quitar
+- [ ✅] Viste cuántas celdas se crean con 100 posts (Paso 7.2)
+- [✅ ] Viste el leak en el **Memory Graph** y desapareció con `[weak self]` (Paso 7.3)
+- [✅ ] `test_feed_isReleasedFromMemory` **falla** sin `[weak self]` y **pasa** con él (Paso 8.4)
+- [✅ ] 40 tests en verde
+- [ ✅] Revisaste `git --no-pager diff --staged` antes del commit
 
 ## 🔥 Reto extra (opcional, +5 puntos)
 1. **Like con swipe.** Implementa `trailingSwipeActionsConfigurationForRowAt` (`UITableViewDelegate`) con una `UIContextualAction` "❤️ Me gusta" / "💔 Quitar" que llame a `toggleLike`. ¿Necesitas `[weak self]` en el handler de la acción? Explica por qué sí o por qué no en un comentario.
@@ -582,11 +582,11 @@ Un test que nunca falla no sirve de nada. Quita otra vez el `[weak self]` (como 
 4. **`unowned` 💥.** Cambia `[weak self]` por `[unowned self]`. ¿Funciona? ¿Pasa el test de leak? Describe un escenario en el que `unowned` crashearía aquí (pista: una closure que se ejecuta **después** de que el Feed se liberó, como un `DispatchQueue.main.asyncAfter`).
 
 ## 🧠 Preguntas de repaso (respóndelas antes del Día 5)
-1. En el experimento 7.2, ¿cuántas celdas se crearon para 100 posts? ¿Por qué no 100? ¿Qué bug aparecería si en `configure` solo pintaras el corazón cuando `isLikedByMe` es `true`?
-2. Explica con tus palabras el ciclo del Paso 7.3: ¿quién retiene a quién? ¿Por qué `[weak self]` lo rompe y por qué después hay que usar `self?.`?
-3. ¿Qué diferencia hay entre `weak` y `unowned`? ¿Cuál es más seguro y por qué?
+1. En el experimento 7.2, ¿cuántas celdas se crearon para 100 posts? ¿Por qué no 100? ¿Qué bug aparecería si en `configure` solo pintaras el corazón cuando `isLikedByMe` es `true`? - Aparecen 25, ya que en el loadFeed, se le puso un rango, 
+2. Explica con tus palabras el ciclo del Paso 7.3: ¿quién retiene a quién? ¿Por qué `[weak self]` lo rompe y por qué después hay que usar `self?.`? El FeedViewController es que el retiene la memoria, por eso el que se muestren las instancias al regresar al login, por que weak es una instancia unica que se vuelve nil sola, de los contrario nunca se libera del ciclo
+3. ¿Qué diferencia hay entre `weak` y `unowned`? ¿Cuál es más seguro y por qué?  Que Weak se vuelve nil solo, y unowned se crashea, es mas seguro weak
 4. ¿Qué ganamos con que `FeedViewController` reciba un `FeedLoader` (protocolo) en el `init`, en lugar de crear `MockFeedLoader()` adentro? Da **dos** ventajas.
-5. ¿Por qué `toggleLike` busca el post por `id` en lugar de usar el `indexPath` que tenía la celda cuando se configuró?
+5. ¿Por qué `toggleLike` busca el post por `id` en lugar de usar el `indexPath` que tenía la celda cuando se configuró? Por seguridad de que no se crashee la app
 
 > 💡 Tip para las preguntas (lo que hablamos ayer): antes de responder, **busca el concepto en tu propio código** de hoy. Las 5 respuestas están en algo que escribiste o viste en un experimento.
 
