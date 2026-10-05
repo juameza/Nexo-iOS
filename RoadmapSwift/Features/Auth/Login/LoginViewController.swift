@@ -23,23 +23,23 @@ final class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        print("🟢 viewDidLoad")
+        
         configureUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("🔵 viewWillAppear")
+       
     }
     
     override func viewIsAppearing(_ animated: Bool) {
         super.viewIsAppearing(animated)
-        print("🟡 viewIsAppearing")
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        print("🟣 viewDidAppear")
+       
     }
     
     
@@ -74,7 +74,7 @@ final class LoginViewController: UIViewController {
             }
             hideError()
             print("✅ Login valido con \(validEmail)")
-            // Dia 5: navegar al Feed
+            showFeed()
         }
         
         
@@ -91,9 +91,23 @@ final class LoginViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
+        
         guard segue.identifier == SegueID.showRegister, let register = segue.destination as? RegisterViewController else { return }
         register.prefilledEmail = emailTextField.text
         register.delegate = self // avisame a MI cuando se cree la cuenta
+    }
+    
+    private func showFeed() {
+        let storyboard = UIStoryboard(name: "Feed", bundle: nil)
+        guard let feed = storyboard.instantiateInitialViewController(creator: { coder in
+            FeedViewController(coder: coder, loader: MockFeedLoader())
+        }) else {
+            // Solo truena en Debug: te avisa que olvidaste "Is Initiañ ViewContoller"
+            assertionFailure("Feed.storyboard no tiene Initial View Controller")
+            return
+        }
+        navigationController?.pushViewController(feed, animated: true)
+        
     }
  
     

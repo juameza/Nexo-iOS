@@ -18,7 +18,7 @@ nonisolated enum FeedLoaderError: Error, Equatable {
 // Lee el feed desde un JSON dentro de la app.
 // Recibe bundle y fileName en el init (inyeccion de dependencias por init):
 // Asi en los tests podemos pedirle un archivo que NO existe y probar el error.
-nonisolated struct MockFeedLoader {
+nonisolated struct MockFeedLoader: FeedLoader {
     private let bundle: Bundle
     private let fileName: String
     

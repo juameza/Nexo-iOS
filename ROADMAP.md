@@ -489,8 +489,15 @@ Cada día pide: **"Día N"** y recibirás:
 - `feed.json` mock + `MockFeedLoader` con `throws`
 - 11 tests nuevos con fixtures (18 en total)
 
-### Día 3 → ver [`Dias/Dia-03.md`](Dias/Dia-03.md)
+### Día 3 ✅ → ver [`Dias/Dia-03.md`](Dias/Dia-03.md)
 - Pantalla de **Registro** en Storyboard abierta con un segue `Show`
 - Pasar datos hacia adelante (`prepare(for:sender:)`) y hacia atrás (delegate propio `weak`)
 - `PasswordValidator` (`CaseIterable`, `filter`, `map`) y `RegistrationForm` testeable sin UI
 - 13 tests nuevos, incluido un test de humo del storyboard (32 en total)
+
+### Día 4 → ver [`Dias/Dia-04.md`](Dias/Dia-04.md)
+- **Feed** con `UITableViewController` en un storyboard propio (`Feed.storyboard`), `PostCell` con outlets y alto automático
+- Reciclaje de celdas (`dequeueReusableCell`, `prepareForReuse`) y navegación con `instantiateInitialViewController(creator:)`
+- Protocolo `FeedLoader` para inyectar el loader (stub en tests)
+- **ARC**: `strong`/`weak`/`unowned`, retain cycle con closures, `deinit` y Memory Graph Debugger
+- 8 tests nuevos, incluido un test que detecta memory leaks (40 en total)
