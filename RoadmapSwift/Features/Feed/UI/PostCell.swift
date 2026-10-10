@@ -26,8 +26,8 @@ final class PostCell: UITableViewCell {
     // MARK: - Configuracion
     // Se llama en CADA cellForRowAt: hay que poner TODO por que la celda puede venir reciclada
     func configure(with post: Post){
-        nameLabel.text = post.author.isVerified ? "\(post.author.displayName) *" : post.author.displayName
-        metaLabel.text = "\(post.author.handle) . \(post.relativeCreatedAt)"
+        nameLabel.text = post.author.isVerified ? "\(post.author.displayName) ✓" : post.author.displayName
+        metaLabel.text = "\(post.author.handle) · \(post.relativeCreatedAt)"
         bodyLabel.text = post.content.previewText
         
         // 🟢 iOS 15+: UIButton.Configuration (como en el dia 1), El if/else cubre ambos estados:

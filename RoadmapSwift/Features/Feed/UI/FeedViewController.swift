@@ -100,7 +100,7 @@ final class FeedViewController: UITableViewController {
     // MARK: - UITableViewDelegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        // Mid: abrir el detall del post
+        // Mid: abrir el detalle del post
     }
 
 }

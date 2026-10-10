@@ -18,6 +18,10 @@ final class LoginViewController: UIViewController {
     
     // MARK: - Dependencias
     private let emailValidator =  EmailValidator()
+    
+    // Quien me crea (el AppRouter) decide que pasa al iniciar sesión. El LOGIN ya NO conoce el Feed.
+    // var opcional: el storyboard me crea con init?(coder:), asi que se asigna DESPUES (Dia 3, P2)
+    var onLogin:  ((String) -> Void)?
 
     // MARK: - Ciclo de vida
     override func viewDidLoad() {
@@ -59,8 +63,7 @@ final class LoginViewController: UIViewController {
                 return
             }
             hideError()
-            print("✅ Login valido con \(validEmail)")
-            showFeed()
+            onLogin?(validEmail)
         }
         
         
@@ -83,18 +86,6 @@ final class LoginViewController: UIViewController {
         register.delegate = self // avisame a MI cuando se cree la cuenta
     }
     
-    private func showFeed() {
-        let storyboard = UIStoryboard(name: "Feed", bundle: nil)
-        guard let feed = storyboard.instantiateInitialViewController(creator: { coder in
-            FeedViewController(coder: coder, loader: MockFeedLoader())
-        }) else {
-            // Solo truena en Debug: te avisa que olvidaste "Is Initiañ ViewContoller"
-            assertionFailure("Feed.storyboard no tiene Initial View Controller")
-            return
-        }
-        navigationController?.pushViewController(feed, animated: true)
-        
-    }
  
     
     // MARK: - Helpers
