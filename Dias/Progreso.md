@@ -30,8 +30,9 @@ Cada día se califica **después** de revisar el código final (tras las correcc
 | 2 | Modelos, `Codable`, JSON mock | 31 | 18 | 11 | 18 | 0 | **78** | 👍 Bien |
 | 3 | Registro, segues, delegate, `PasswordValidator` | 30 | 19 | 12 | 11 | 0 | **72** | 👍 Bien |
 | 4 | Feed con `UITableView`, ARC y test de memory leak | 31 | 19 | 13 | 11 | 0 | **74** | 👍 Bien |
+| 5 | Raíz por código, tabs, `UserDefaults` y SwiftUI | 31 | 15 | 10 | 8 | 0 | **64** | ⚠️ Suficiente |
 
-**Promedio:** 74.5 · **Tendencia:** ➡️ estable. El código y Git mejoran; los conceptos siguen siendo el área débil.
+**Promedio:** 72.4 · **Tendencia:** ⬇️ bajó en el Día 5, sobre todo por las preguntas sin responder y el merge con tests en rojo. El código final funciona.
 
 ---
 
@@ -69,6 +70,14 @@ Cada día se califica **después** de revisar el código final (tras las correcc
 - **✨ Lo mejor:** hiciste todos los experimentos (Memory Graph y test de leak que falla y pasa), y P3 (`weak` vs `unowned`) ya sale bien: avance real en ARC.
 - **🎯 A reforzar:** responder **todas** las partes de cada pregunta; reciclaje de celdas; inyección de dependencias; borrar el código de los experimentos antes del commit.
 
+### Día 5: 64/100 ⚠️
+- **💻 Código 31/40:** router, sesión, tabs, `AccountView` y los dos `[weak self]` funcionan; los pendientes del Día 4 quedaron corregidos. Restas: `AppInfo` distinto de la guía (sin paréntesis, parámetro no opcional y un `!`), y **Main Interface** sigue con `Main` y se agregó `UIStatusBarStyle = ""` sin querer.
+- **🧪 Tests 15/20:** 50/50 en verde tras la corrección. Restas: se cambió un test (`nil` → `["":""]`) para que se ajustara al código, y un typo en el dato de otro (`ane@`).
+- **🌿 Git 10/15:** la corrección se hizo en su rama `fix/`. Resta: **merge a `main` con 3 tests en rojo**.
+- **🧠 Conceptos 8/25:** P1 🟡 · P2 🔴 · P3 🔴 (sin respuesta) · P4 🔴 (sin respuesta) · P5 ✅
+- **✨ Lo mejor:** completaste los tres experimentos y el checklist, y P5 (UserDefaults contra Keychain) está bien.
+- **🎯 A reforzar:** ⌘U **antes** de cada commit; si un test no compila, revisa primero el código y no el test; quién es dueño de cada objeto (ARC); responder todas las preguntas.
+
 ---
 
 ## 🔁 Patrones a vigilar
@@ -78,3 +87,4 @@ Cada día se califica **después** de revisar el código final (tras las correcc
 4. **Memoria (ARC):** `weak`, `strong` y retain cycles salieron dos veces (Día 1 P1 y Día 3 P1). En el Día 4 ya mejoró (P3 ✅), pero falta explicar la cadena completa del ciclo.
 5. **Preguntas incompletas:** en el Día 4 una quedó sin responder y otra respondió solo 1 de sus 3 partes. Contesta cada parte por separado.
 6. **Caracteres parecidos:** `.` en lugar de `·`, `*` en lugar de `✓`. Copia los símbolos de la guía.
+7. **Tests en rojo:** el Día 5 se hizo merge con 3 tests fallando y se modificó un test para que compilara. Regla: ⌘U en verde → commit → merge.

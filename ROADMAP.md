@@ -502,7 +502,7 @@ Cada día pide: **"Día N"** y recibirás:
 - **ARC**: `strong`/`weak`/`unowned`, retain cycle con closures, `deinit` y Memory Graph Debugger
 - 8 tests nuevos, incluido un test que detecta memory leaks (40 en total)
 
-### Día 5 → ver [`Dias/Dia-05.md`](Dias/Dia-05.md)
+### Día 5 ✅ → ver [`Dias/Dia-05.md`](Dias/Dia-05.md)
 - Ventana creada por código en el `SceneDelegate` y `AppRouter` que cambia el `rootViewController` (Login ↔ tabs)
 - `UITabBarController` por código: **Inicio** (Feed, UIKit) y **Cuenta** (SwiftUI con `UIHostingController`)
 - Sesión con `UserDefaults` 🟤 y preferencias con `@AppStorage` 🟢; SwiftUI: `@State`, `@Binding`, `Form`, `NavigationStack`, `#Preview`
