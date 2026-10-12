@@ -28,7 +28,7 @@ final class FeedViewController: UITableViewController {
     
     // Obligatorio para heredar de UIViewController. si alguien crea el Feed sin loader, crash claro
     required init?(coder: NSCoder) {
-        fatalError("Usam init(coder:loader:)")
+        fatalError("Usa init(coder:loader:)")
         
     }
     

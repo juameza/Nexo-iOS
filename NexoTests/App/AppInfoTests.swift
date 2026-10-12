@@ -18,7 +18,7 @@ final class AppInfoTests: XCTestCase {
     }
     
     func test_init_missingKeys_usesQuestionMarks() {
-        XCTAssertEqual(AppInfo(infoDictionary: ["":""]).versionText, "? (?)")
+        XCTAssertEqual(AppInfo(infoDictionary: nil).versionText, "? (?)")
     }
 }
 

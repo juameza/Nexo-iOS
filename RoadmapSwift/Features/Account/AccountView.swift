@@ -34,7 +34,7 @@ struct AccountView: View {
                 Section("Preferencias"){
                     // $autoplayVideos es un Binding: la fila puede LEER y ESCRIBIR el valor del padre
                     SettingToggleRow(
-                        title: "Reproducir videos automaticamente",
+                        title: "Reproducir videos automáticamente",
                         systemImage: "play.circle",
                         isOn: $autoplayVideos
                     )
@@ -58,7 +58,7 @@ struct AccountView: View {
             }
             .navigationTitle("Cuenta")
             // El dialogo se muestra mientras isConfirmingLogout sea true; SwiftUI lo regresa a false al cerrarlo
-            .confirmationDialog("Cerrar sesión?", isPresented: $isConfirmingLogout, titleVisibility: .visible) {
+            .confirmationDialog("¿Cerrar sesión?", isPresented: $isConfirmingLogout, titleVisibility: .visible) {
                 Button("Cerrar sesión", role: .destructive, action: onLogout)
             }
         }

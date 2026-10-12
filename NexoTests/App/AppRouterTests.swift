@@ -41,7 +41,7 @@ final class AppRouterTests: XCTestCase {
         
     }
     
-    func test_logOut_clearSessionAndShowsLogin() throws {
+    func test_logOut_clearsSessionAndShowsLogin() throws {
         let (sut, window, session) = makeSUT(loggedInAs: "ana@nexo.app")
         sut.start()
         sut.logOut(animated: false)

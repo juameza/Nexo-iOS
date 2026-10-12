@@ -19,7 +19,7 @@ final class SessionStoreTests: XCTestCase {
     
     func test_logIn_savesEmail() {
         let sut = SessionStore(defaults: makeIsolatedDefaults())
-        sut.logIn(email: "ane@nexo.app")
+        sut.logIn(email: "ana@nexo.app")
         XCTAssertTrue(sut.isLoggedIn)
         XCTAssertEqual(sut.currentEmail, "ana@nexo.app")
     }

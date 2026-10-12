@@ -708,16 +708,16 @@ final class AppRouterTests: XCTestCase {
 ---
 
 ## ✅ Checklist del día
-- [ ] Pendientes del Día 4 corregidos (`✓`, `·` y typos)
-- [ ] Al iniciar sesión aparecen los tabs **Inicio** y **Cuenta**, sin botón "atrás"
-- [ ] Al reabrir la app (⌘. y ⌘R) entras directo a los tabs
-- [ ] El switch de **Cuenta** conserva su valor al reabrir la app
-- [ ] **Cerrar sesión** pide confirmación, regresa al Login y sale `♻️ FeedViewController liberado`
-- [ ] Viste el `.plist` de UserDefaults en texto plano (Paso 7.3)
-- [ ] Viste que sin `self.router = router` el login no hace nada (Paso 7.4)
-- [ ] Los tests de leak del router fallan sin `[weak self]` (Paso 8.5)
-- [ ] 50 tests en verde
-- [ ] Revisaste `git --no-pager diff --staged` antes del commit
+- [✅] Pendientes del Día 4 corregidos (`✓`, `·` y typos)
+- [✅] Al iniciar sesión aparecen los tabs **Inicio** y **Cuenta**, sin botón "atrás"
+- [✅] Al reabrir la app (⌘. y ⌘R) entras directo a los tabs
+- [✅] El switch de **Cuenta** conserva su valor al reabrir la app
+- [✅] **Cerrar sesión** pide confirmación, regresa al Login y sale `♻️ FeedViewController liberado`
+- [✅] Viste el `.plist` de UserDefaults en texto plano (Paso 7.3)
+- [✅] Viste que sin `self.router = router` el login no hace nada (Paso 7.4)
+- [✅] Los tests de leak del router fallan sin `[weak self]` (Paso 8.5)
+- [✅] 50 tests en verde
+- [✅] Revisaste `git --no-pager diff --staged` antes del commit
 
 ## 🔥 Reto extra (opcional, +5 puntos)
 1. **🟢 `UITab` (iOS 18+).** En lugar de `tabBar.viewControllers = [...]`, usa `tabBar.tabs = [UITab(title:image:identifier:) { _ in ... }, ...]`. Ajusta el test de los títulos (pista: `tabBar.tabs.map(\.title)`). Corre en el simulador de **iPad**: ¿qué cambia?
@@ -729,10 +729,13 @@ final class AppRouterTests: XCTestCase {
 > 💡 Recuerda: si una pregunta tiene varias partes, contesta **cada parte en su propia línea**. Si no sabes una, escribe lo que observaste en el experimento: eso ya da puntos parciales.
 
 1. ¿Por qué después del login cambiamos el `rootViewController` en lugar de hacer `push` del Feed? Da **dos** razones (una de experiencia de usuario y una de memoria).
+Cambiamos a root para que cuando se haga login nos mande al tab, y no haya botón de regresar al login., Asi mismo se reusa la vista y se evita desbordar memoria
 2. En el experimento 7.4, ¿por qué el login no hacía nada sin `self.router = router`? ¿Quién era el dueño del router antes y quién después?
+El dueño del router era la window
 3. En el Paso 8.5, ¿qué tests fallaron al quitar el `weak` de `onLogin` y cuáles al quitarlo de `onLogout`? ¿Por qué el test `test_login_savesSessionAndShowsTabs` **pasa** aunque `onLogin` no tenga `weak`? (Pista: ¿qué hace `setRoot` con la pantalla anterior?)
 4. ¿Qué diferencia hay entre `@State`, `@Binding` y `@AppStorage`? ¿Quién es el dueño del valor en cada uno?
 5. ¿Por qué el correo puede ir en `UserDefaults` pero la contraseña o un token **no**? ¿Dónde irían?
+El correo es un dato no sensible por lo tanto puede ir en UserDefaults, mientras que la contraseña o token son datos sensibles y deberían ir en el Keychain
 
 ---
 **Próximo (Día 6):** red con **`URLSession` y completion handlers** 🟤: descargar los **avatares** de los autores, `DispatchQueue.main.async` (por qué la UI solo se toca en el hilo principal), `[weak self]` en closures **asíncronas** y el bug clásico de la imagen equivocada en una celda reciclada.
