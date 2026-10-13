@@ -31,8 +31,10 @@ Cada día se califica **después** de revisar el código final (tras las correcc
 | 3 | Registro, segues, delegate, `PasswordValidator` | 30 | 19 | 12 | 11 | 0 | **72** | 👍 Bien |
 | 4 | Feed con `UITableView`, ARC y test de memory leak | 31 | 19 | 13 | 11 | 0 | **74** | 👍 Bien |
 | 5 | Raíz por código, tabs, `UserDefaults` y SwiftUI | 31 | 15 | 10 | 8 | 0 | **64** | ⚠️ Suficiente |
+| 6 | `URLSession`, GCD, caché y celdas recicladas | 37 | 18 | 15 | 16 | 0 | **86** | ✅ Muy bien |
 
-**Promedio:** 72.4 · **Tendencia:** ⬇️ bajó en el Día 5, sobre todo por las preguntas sin responder y el merge con tests en rojo. El código final funciona.
+**Promedio:** 74.7 · **Tendencia:** ⬆️ el Día 6 es tu mejor nota: proceso de Git impecable, tests en verde antes del commit y las 5 preguntas respondidas
+**Promedio:** 74.7 · **Tendencia:** ⬆️ el Día 6 es tu mejor nota: proceso de Git impecable, tests en verde antes del commit y las 5 preguntas respondidas.
 
 ---
 
@@ -78,6 +80,15 @@ Cada día se califica **después** de revisar el código final (tras las correcc
 - **✨ Lo mejor:** completaste los tres experimentos y el checklist, y P5 (UserDefaults contra Keychain) está bien.
 - **🎯 A reforzar:** ⌘U **antes** de cada commit; si un test no compila, revisa primero el código y no el test; quién es dueño de cada objeto (ARC); responder todas las preguntas.
 
+### Día 6: 86/100 ✅
+- **💻 Código 37/40:** loader, caché, validación de `statusCode`, las dos defensas contra la imagen equivocada y el storyboard (stack horizontal, 40×40) están bien, sin `print` ni código comentado. Restas: cambiaste el valor de `CodingKeys` por la URL (lo regresaste antes del commit) y typos en comentarios (`vacai`, `interner`, `rela`).
+- **🧪 Tests 18/20:** 58/58 en verde. Resta: al copiar, dos tests de `RemoteImageLoaderTests` quedaron en uno (nombre de un caso, contenido de otro); se corrigió antes del commit.
+- **🌿 Git 15/15:** rama, ⌘U en verde **antes** del commit, diff revisado y merge a `main`. Lección del Día 5 aplicada.
+- **🧠 Conceptos 16/25:** P1 🟡 · P2 🟡 · P3 ✅ · P4 🔴 · P5 ✅
+- **✨ Lo mejor:** el proceso completo, y notaste por tu cuenta que Xcode contaba 57 y no 58.
+- **🎯 A reforzar:** retain cycle contra "objeto que vive de más" en closures asíncronas; qué es `error` en `URLSession` (transporte) y qué es un status HTTP
+- **🎯 A reforzar:** ⌘U **antes** de cada commit; si un test no compila, revisa primero el código y no el test; quién es dueño de cada objeto (ARC); responder todas las preguntas.
+
 ---
 
 ## 🔁 Patrones a vigilar
@@ -87,4 +98,5 @@ Cada día se califica **después** de revisar el código final (tras las correcc
 4. **Memoria (ARC):** `weak`, `strong` y retain cycles salieron dos veces (Día 1 P1 y Día 3 P1). En el Día 4 ya mejoró (P3 ✅), pero falta explicar la cadena completa del ciclo.
 5. **Preguntas incompletas:** en el Día 4 una quedó sin responder y otra respondió solo 1 de sus 3 partes. Contesta cada parte por separado.
 6. **Caracteres parecidos:** `.` en lugar de `·`, `*` en lugar de `✓`. Copia los símbolos de la guía.
-7. **Tests en rojo:** el Día 5 se hizo merge con 3 tests fallando y se modificó un test para que compilara. Regla: ⌘U en verde → commit → merge.
+7. **Tests en rojo:** el Día 5 se hizo merge con 3 tests fallando y se modificó un test para que compilara. Regla: ⌘U en verde → commit → merge. ✅ Corregido en el Día 6.
+8. **Contar los tests:** si el total no coincide con la guía, `grep -rc "func test" NexoTests` y compara archivo por archivo (Día 6).

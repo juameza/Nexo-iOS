@@ -689,8 +689,8 @@ final class URLProtocolStub: URLProtocol {
 - [✅] Viste los warnings de *main actor-isolated* sin `DispatchQueue.main.async` (7.3)
 - [✅] Viste qué pasa sin `resume()` (7.4)
 - [✅] El test del bug falla sin la comprobación de `representedPostID` (8.5)
-- [⚠️] 58 tests en verde **antes** del commit
-- [ Falta] Revisaste `git --no-pager diff --staged` (sin `print` ni código comentado)
+- [✅] 58 tests en verde **antes** del commit
+- [✅] Revisaste `git --no-pager diff --staged` (sin `print` ni código comentado)
 
 ## 🔥 Reto extra (opcional, +5 puntos)
 1. **🟢 `async/await`.** Agrega a `ImageLoader` una extensión `func loadImage(from url: URL) async throws -> UIImage` usando `withCheckedThrowingContinuation`. ¿Cómo cancelarías la tarea si se cancela el `Task`? (Pista: `withTaskCancellationHandler`.)
@@ -702,10 +702,17 @@ final class URLProtocolStub: URLProtocol {
 > 💡 Contesta **cada parte en su propia línea**. Si no sabes, escribe lo que viste en el experimento: eso ya da puntos parciales. **Una respuesta en blanco vale 0.**
 
 1. En el experimento 7.2, ¿en qué hilo llegó el completion de `URLSession` y en cuál se pintó la imagen? ¿Por qué hace falta `DispatchQueue.main.async`?
+-En el hilo Main, se pintó en el hilo Main. 
+-Hace falta DispatchQueue.main.async porque la closure de URLSession puede ser llamada desde un hilo de fondo, y cualquier actualización de UI debe hacerse en el hilo principal.
+-
 2. Un servidor responde **404**. ¿`error` viene con valor o en `nil`? ¿Qué pasaría si no revisaras el `statusCode`?
+No sabriamos que error code nos regresa el servicio
 3. Explica el bug de la imagen equivocada con tus palabras. ¿Por qué **cancelar** en `prepareForReuse` no basta y hace falta `representedPostID`?
+No basta con cancelar en prepareForReuse porque la descarga de la imagen puede completarse después de que la celda ha sido reciclada y reutilizada para otro post. Por eso, necesitamos verificar representedPostID para asegurarnos de que la celda todavía representa el mismo post antes de actualizar la imagen.
 4. En `loadAvatar` usamos `[weak cell]`. ¿Hay un **retain cycle** si fuera `strong`? ¿Entonces qué problema evita el `weak`?
+evita desbordamiento de memoria, ya que si la celda se libera, no queremos que la closure la retenga y cause un ciclo de retención.
 5. ¿Qué diferencia hay entre un **stub** (Día 4) y un **spy** (hoy)? ¿Por qué `RemoteImageLoaderTests` usa `URLProtocolStub` en lugar de `ImageLoaderSpy`?
+la diferencia es que un stub devuelve datos predefinidos, mientras que un spy registra las llamadas y permite verificar el comportamiento del código bajo prueba. `RemoteImageLoaderTests` usa `URLProtocolStub` porque quiere probar el comportamiento real del `RemoteImageLoader` con respuestas de red simuladas, mientras que `ImageLoaderSpy` se usa para verificar interacciones en los tests del feed.
 
 ---
 **Próximo (Día 7):** **Pull to refresh** con `UIRefreshControl`, estados de pantalla (cargando / vacío / error / contenido) con un `enum`, un **`FeedLoader` asíncrono** con completion handler y retraso simulado, y el patrón **MVC** puesto a prueba: ¿cuánto ha crecido `FeedViewController`? (El primer paso hacia MVVM.)
