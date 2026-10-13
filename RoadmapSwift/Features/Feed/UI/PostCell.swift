@@ -18,6 +18,30 @@ final class PostCell: UITableViewCell {
     @IBOutlet private weak var bodyLabel: UILabel!
     @IBOutlet private weak var likeButton: UIButton!
     
+    @IBOutlet private weak var avatarImageView: UIImageView!
+    
+    // Se muestra mientras carga, si falla, o si el autor no tiene foto
+    private static let avatarPlaceholder = UIImage(systemName: "person.crop.circle.fill")
+    
+    // A que post representa la celda AHORA. Defensa #2 contra la imagen equivocada (Concepto 4)
+    // private(set): El Feed lo LEE, pero solo la celda lo cambia (en configure y prepareForReuse)
+    private(set) var representedPostID: Post.ID?
+    
+    // La descarga en curso de esta celda, para cancelarla al reciclarla. Defensa #1
+    var avatarTask: ImageLoadTask?
+    
+    // Solo lectura, para los tests, el outlet es private
+    var displayedAvatar: UIImage? { avatarImageView.image }
+    
+    
+    // Una sola vez, cuando el storyboard termina de crear la celda (no en cada configure)
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        avatarImageView.layer.cornerRadius = 20 // La mitad de 40 -> circulo
+        avatarImageView.clipsToBounds = true
+        avatarImageView.tintColor = .systemGray3 // Color del placeholder (es un SF symbol)
+    }
+    
    
     
     // La celda NO sabe dar like: Solo Avisa "me tocaron" (igual que el delegate del Dia 3, pero con los closures)
@@ -26,6 +50,9 @@ final class PostCell: UITableViewCell {
     // MARK: - Configuracion
     // Se llama en CADA cellForRowAt: hay que poner TODO por que la celda puede venir reciclada
     func configure(with post: Post){
+        representedPostID = post.id
+        avatarImageView.image = Self.avatarPlaceholder // ⚠️ si no, se veria el avatar del post
+        
         nameLabel.text = post.author.isVerified ? "\(post.author.displayName) ✓" : post.author.displayName
         metaLabel.text = "\(post.author.handle) · \(post.relativeCreatedAt)"
         bodyLabel.text = post.content.previewText
@@ -45,6 +72,15 @@ final class PostCell: UITableViewCell {
     override func prepareForReuse(){
         super.prepareForReuse()
         onLikeTapped = nil
+        avatarTask?.cancel() // defensa #1: ya no necesitamos esa imagen
+        avatarTask = nil
+        representedPostID = nil
+        avatarImageView.image = Self.avatarPlaceholder
+    }
+    
+    // nil (fallo la descarga) -> placeholder
+    func setAvatar(_ image: UIImage?){
+        avatarImageView.image = image ?? Self.avatarPlaceholder
     }
     
     // MARK: - Acciones

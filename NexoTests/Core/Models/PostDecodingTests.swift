@@ -123,20 +123,21 @@ final class PostTests: XCTestCase {
 // Un "fixture" es un objeto de prueba con valores por defecto.
 // Cada test cambia SOLO lo que le importa y el resto queda con valores válidos.
 extension User {
-    static func fixture(username: String = "mario") -> User {
-        User(id: UUID(), username: username, displayName: "Mario", avatarURL: nil, isVerified: false, bio: nil)
+    static func fixture(username: String = "mario", avatarURL: URL? = nil) -> User {
+        User(id: UUID(), username: username, displayName: "Mario", avatarURL: avatarURL, isVerified: false, bio: nil)
     }
 }
 
 extension Post {
     static func fixture(
+        author: User = .fixture(),
         content: PostContent = .text("Hola"),
         likeCount: Int = 0,
         isLikedByMe: Bool = false
     ) -> Post {
         Post(
             id: UUID(),
-            author: .fixture(),
+            author: author,
             content: content,
             // Fecha FIJA: los tests no deben depender del reloj. Y un número entero de
             // segundos, porque ISO 8601 no guarda milisegundos y el round trip fallaría.

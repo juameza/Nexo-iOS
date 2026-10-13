@@ -45,16 +45,88 @@ final class FeedViewControllerTests: XCTestCase {
         
     }
     
+    // MARK: - Avatares
+    func test_cellForRow_requestsAuthorAvatar() throws{
+        let url = try XCTUnwrap(URL(string: "https://nexo.app/ana.png"))
+        let (sut, imageLoader) = try makeSUTWithSpy(posts: [.fixture(author: .fixture(avatarURL: url))])
+        
+        _ = renderedCell(at: 0, in: sut)
+        
+        XCTAssertEqual(imageLoader.requestedURLs, [url])
+    }
+    
+    func test_cellForRow_withoutAvatarURL_doesNotRequestAndShowsPlaceholder() throws {
+        let (sut, imageLoader) = try makeSUTWithSpy(posts: [.fixture(author: .fixture(avatarURL: nil))])
+        
+        let cell = renderedCell(at: 0, in: sut)
+        
+        XCTAssertTrue(imageLoader.requestedURLs.isEmpty)
+        XCTAssertNotNil(cell?.displayedAvatar)
+    }
+    
+    func test_avatarLoaded_showsImageOnlyAfterMainQueueRuns() throws {
+        let url = try XCTUnwrap(URL(string: "https://nexo.app/ana.png"))
+        let (sut, imageLoader) = try makeSUTWithSpy(posts: [.fixture(author: .fixture(avatarURL: url))])
+        let cell = try XCTUnwrap(renderedCell(at: 0, in: sut))
+        let image = UIImage()
+        
+        imageLoader.complete(with: image)
+        
+        // Todavia NO: el Feed la mando con DispathQueue.main.async ("mas tarde")
+        XCTAssertFalse(cell.displayedAvatar === image)
+        
+        flushMainQueue()
+        XCTAssertTrue(cell.displayedAvatar === image) // === : la MISMA instancia (Dia 1, P2)
+    }
+    
+    // El bug del concepto 4, reproducido sin red lenta y sin hacer scroll
+    func test_avatarLoaded_afterCellWasReused_isIgnored() throws {
+        let urlA = try XCTUnwrap(URL(string: "https://nexo.app/a.png"))
+        let postA = Post.fixture(author: .fixture(avatarURL: urlA))
+        let postB = Post.fixture(author: .fixture(avatarURL: nil))
+        let (sut, imageLoader) = try makeSUTWithSpy(posts: [postA])
+        let cell = try XCTUnwrap(renderedCell(at: 0, in: sut)) // pide el avatar de A
+        let imageOfA = UIImage()
+        
+        // La tabla recicla la celda para el post B (lo mismo que hace al hacer scroll)
+        cell.prepareForReuse()
+        cell.configure(with: postB)
+        // ...y llega TARDE la imagen de A
+        imageLoader.complete(with: imageOfA, at: 0)
+        flushMainQueue()
+        
+        XCTAssertEqual(imageLoader.cancelledURLs, [urlA])  // defensa #1
+        XCTAssertFalse(cell.displayedAvatar === imageOfA) // defensa # 2
+    }
+    
     // MARK: - Helpers
     // make System Under Test: un solo lugar para construir el Feed en todos los tests
-    private func makeSUT(result: Result<[Post], Error>) throws -> FeedViewController {
+    private func makeSUT(result: Result<[Post], Error>, imageLoader: ImageLoader = ImageLoaderSpy()) throws -> FeedViewController {
         let storyboard = UIStoryboard(name: "Feed", bundle: Bundle(for: FeedViewController.self))
         let sut = try XCTUnwrap(storyboard.instantiateInitialViewController{ coder in
-            FeedViewController(coder: coder, loader: FeedLoaderStub(result: result))
+            FeedViewController(coder: coder, loader: FeedLoaderStub(result: result), imageLoader: imageLoader)
                             
         })
         sut.loadViewIfNeeded()
         return sut
+    }
+    
+    private func makeSUTWithSpy(posts: [Post]) throws -> (FeedViewController, ImageLoaderSpy){
+        let imageLoader = ImageLoaderSpy()
+        let sut = try makeSUT(result: .success(posts), imageLoader: imageLoader)
+        return (sut, imageLoader)
+    }
+    
+    private func renderedCell(at row: Int, in sut: FeedViewController) -> PostCell? {
+        sut.tableView(sut.tableView, cellForRowAt: IndexPath(row: row, section: 0)) as? PostCell
+    }
+    
+    // Espera a que se ejecute lo que ya estaba encolado en el hilo principal
+    // La cola es FIFO: cuando corre NUESTRO bloque, el DispatchQueue.main.async del Feed ya corrio
+    private func flushMainQueue() {
+        let exp = expectation(description: "main queue")
+        DispatchQueue.main.async { exp.fulfill() }
+        wait(for: [exp], timeout: 1)
     }
     
 }

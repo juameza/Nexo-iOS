@@ -507,3 +507,9 @@ Cada día pide: **"Día N"** y recibirás:
 - `UITabBarController` por código: **Inicio** (Feed, UIKit) y **Cuenta** (SwiftUI con `UIHostingController`)
 - Sesión con `UserDefaults` 🟤 y preferencias con `@AppStorage` 🟢; SwiftUI: `@State`, `@Binding`, `Form`, `NavigationStack`, `#Preview`
 - ARC: quién es dueño del router; 10 tests nuevos, dos detectan leaks (50 en total)
+
+### Día 6 → ver [`Dias/Dia-06.md`](Dias/Dia-06.md)
+- Avatares con `URLSession.dataTask` y completion handlers 🟤, validación de `statusCode` y `NSCache`
+- Hilo principal: `DispatchQueue.main.async` 🟤 vs `@MainActor` 🟢; `[weak …]` en closures asíncronas
+- El bug de la imagen equivocada en celdas recicladas: cancelar + `representedPostID`
+- Tests sin internet: spy y `URLProtocol` stub; 8 tests nuevos (58 en total)

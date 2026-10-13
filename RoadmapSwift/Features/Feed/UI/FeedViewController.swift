@@ -15,14 +15,17 @@ final class FeedViewController: UITableViewController {
     // let + protocolo: El feed no sabe (ni le importa) de donde vienen los posts
     private let loader: FeedLoader
     
+    private let imageLoader: ImageLoader
+    
     // MARK: - Estado
     // private (set): desde fuera se puede LEER (util en test), pero solo el Feed la cambia
     private(set) var posts: [Post] = []
     
     // MARK: - Init
     // 🟢 iOS 13+ el storyboard nos crea con ESTE init gracias a instantiateInitialViewController(creator:)
-    init?(coder: NSCoder, loader: FeedLoader){
+    init?(coder: NSCoder, loader: FeedLoader, imageLoader: ImageLoader){
         self.loader = loader
+        self.imageLoader = imageLoader
         super.init(coder: coder)
     }
     
@@ -66,6 +69,24 @@ final class FeedViewController: UITableViewController {
         tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
     }
     
+    private func loadAvatar(for post: Post, in cell: PostCell){
+        
+        guard let url = post.author.avatarURL else { return } // Sin foto: se queda el placeholder
+        // Copiamos el id: la closure no debe depender de post ni de self
+        let postID = post.id
+        
+        // [weak self] (Concepto 3) si la celda desaparece antes de que llegue la imagen, no la retenemos
+        cell.avatarTask = imageLoader.loadImage(from: url) { [weak cell] result in
+            // 🟤 Aqui podemos estar en un hilo de FONDO-> regresamos al principal para tocar la UI
+            DispatchQueue.main.async{
+                
+                // Defensa #2 (Concepto 4): La celda sigues mostrando ESTE post?
+                guard let cell, cell.representedPostID == postID else { return }
+                cell.setAvatar(try? result.get()) // error -> nil -> placeholder
+            }
+        }
+    }
+    
     private func makeMessageLabel(_ text: String) -> UILabel {
         let label = UILabel()
         label.text = text
@@ -87,6 +108,8 @@ final class FeedViewController: UITableViewController {
         }
         let post = posts[indexPath.row]
         cell.configure(with: post)
+        
+        loadAvatar(for: post, in: cell)
         
         // ⚠️ [weak self]: la celda (que vive dentro de NUESTRA table) guarda esta closure.
         // Sin weak la closure retendria al Feed -> retain cycle (Concepto 2)
