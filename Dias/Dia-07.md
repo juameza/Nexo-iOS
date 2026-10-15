@@ -592,14 +592,14 @@ En `NexoTests/Core/Models/PostDecodingTests.swift`, debajo de `test_mockFeedLoad
 ---
 
 ## ✅ Checklist del día
-- [ ] Spinner al abrir Inicio y luego los posts
-- [ ] Pull to refresh recarga y el spinner de arriba se oculta solo
-- [ ] Con `"no_existe"` se ve el mensaje de error (6.2)
-- [ ] Con el `guard`, dos refresh rápidos piden el feed **una** vez (6.3)
-- [ ] Sin `[weak self]` falla el test de memoria (6.4)
-- [ ] Anotaste líneas y número de funciones de `FeedViewController` (6.5)
-- [ ] 66 tests en verde **antes** del commit
-- [ ] `git --no-pager diff --staged` sin `print`, sin código comentado y con `delay: 1.5` en el router
+- [✅] Spinner al abrir Inicio y luego los posts
+- [✅] Pull to refresh recarga y el spinner de arriba se oculta solo
+- [✅] Con `"no_existe"` se ve el mensaje de error (6.2)
+- [✅] Con el `guard`, dos refresh rápidos piden el feed **una** vez (6.3)
+- [✅] Sin `[weak self]` falla el test de memoria (6.4)
+- [✅] Anotaste líneas y número de funciones de `FeedViewController` (6.5)
+- [✅] 66 tests en verde **antes** del commit
+- [✅] `git --no-pager diff --staged` sin `print`, sin código comentado y con `delay: 1.5` en el router
 
 ## 🔥 Reto extra (opcional, +5 puntos)
 1. **Estado vacío de verdad.** Crea `Resources/Mocks/feed_empty.json` con `{ "posts": [] }`, úsalo en el router y comprueba el mensaje de vacío. Escribe un test con `MockFeedLoader(fileName: "feed_empty")` + `expectation`.
@@ -611,9 +611,14 @@ En `NexoTests/Core/Models/PostDecodingTests.swift`, debajo de `test_mockFeedLoad
 > 💡 Contesta **cada parte en su propia línea**. Si no sabes, escribe lo que viste en el experimento. **Una respuesta en blanco vale 0.**
 
 1. ¿Por qué el `enum State` es mejor que tener `isLoading`, `posts` y `errorMessage` por separado? Da un ejemplo de un **estado imposible** que el `enum` evita. ¿Por qué aun así dejamos `isLoading` aparte?
+Se usan los enum, para que sean tipo constantes globales, los cuales podemos manipular mejor, y no estar poniendo en cada vista variables que no se usan, un ejemplo de estado imposible es que se pueda tener un error y a la vez tener posts, y dejamos isLoading aparte porque es una variable que se puede cambiar en cualquier momento, y no depende del estado de la vista.
 2. En el experimento 6.3, ¿cuántas veces se imprimió con el `guard` y cuántas sin él? ¿Qué bug podría aparecer si llegan dos respuestas en desorden?
+- en ambos caso se imprimio 1 vez, o no se si me ganaba el proceso
+- que se repita informacion o se coloque informacion en diferentes ordenes, y que se pierda informacion
 3. En el experimento 6.4, ¿la app liberó el Feed? ¿Qué test falló? ¿Por qué con `MockFeedLoader` **no** hay ciclo y con `FeedLoaderSpy` **sí**? Dibuja la cadena.
 4. En el 6.1, ¿se conservó el ❤️ después del refresh? ¿Por qué? (Pista: ¿de dónde vienen los posts en cada carga?) ¿Quién debería guardar el like en una app real?
+- No se conservo el like, porque los posts vienen del loader, y el loader no guarda el estado de los likes, 
+- en una app real el like lo deberia guardar en la base de datos o en el servidor.
 5. Con lo que mediste en 6.5: menciona **tres** responsabilidades de `FeedViewController` que **no** son de UI. ¿Qué problema tienen hoy para probarse?
 
 ---

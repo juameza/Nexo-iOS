@@ -82,7 +82,7 @@ final class FeedViewController: UITableViewController {
     
     private func loadFeed() {
         guard !isLoading else { return } // ya hay una peticion en curso: no pedir dos veces
-       // print("pidiendo el feed")
+       
         isLoading = true
         // Es la primera carga: spinner grande. Es un refresh: ya se ve el spinner del refreshControl
         if refreshControl?.isRefreshing != true {

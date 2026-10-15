@@ -32,9 +32,9 @@ Cada día se califica **después** de revisar el código final (tras las correcc
 | 4 | Feed con `UITableView`, ARC y test de memory leak | 31 | 19 | 13 | 11 | 0 | **74** | 👍 Bien |
 | 5 | Raíz por código, tabs, `UserDefaults` y SwiftUI | 31 | 15 | 10 | 8 | 0 | **64** | ⚠️ Suficiente |
 | 6 | `URLSession`, GCD, caché y celdas recicladas | 37 | 18 | 15 | 16 | 0 | **86** | ✅ Muy bien |
+| 7 | Carga asíncrona, `enum State`, pull to refresh | 32 | 18 | 13 | 11 | 0 | **74** | 👍 Bien |
 
-**Promedio:** 74.7 · **Tendencia:** ⬆️ el Día 6 es tu mejor nota: proceso de Git impecable, tests en verde antes del commit y las 5 preguntas respondidas
-**Promedio:** 74.7 · **Tendencia:** ⬆️ el Día 6 es tu mejor nota: proceso de Git impecable, tests en verde antes del commit y las 5 preguntas respondidas.
+**Promedio:** 74.6 · **Tendencia:** ➡️ el código y el proceso se mantienen; el Día 7 bajó por dos preguntas en blanco (10 puntos).
 
 ---
 
@@ -86,8 +86,15 @@ Cada día se califica **después** de revisar el código final (tras las correcc
 - **🌿 Git 15/15:** rama, ⌘U en verde **antes** del commit, diff revisado y merge a `main`. Lección del Día 5 aplicada.
 - **🧠 Conceptos 16/25:** P1 🟡 · P2 🟡 · P3 ✅ · P4 🔴 · P5 ✅
 - **✨ Lo mejor:** el proceso completo, y notaste por tu cuenta que Xcode contaba 57 y no 58.
-- **🎯 A reforzar:** retain cycle contra "objeto que vive de más" en closures asíncronas; qué es `error` en `URLSession` (transporte) y qué es un status HTTP
-- **🎯 A reforzar:** ⌘U **antes** de cada commit; si un test no compila, revisa primero el código y no el test; quién es dueño de cada objeto (ARC); responder todas las preguntas.
+- **🎯 A reforzar:** retain cycle contra "objeto que vive de más" en closures asíncronas; qué es `error` en `URLSession` (transporte) y qué es un status HTTP.
+
+### Día 7: 74/100 👍
+- **💻 Código 32/40:** estados con `enum`, `render` único, pull to refresh, `guard !isLoading` y `[weak self]` quedaron bien. Restas: faltó `refreshControl = refresh` (el refresh no funcionaba), `isLoading = true` en `handle` (habría bloqueado el segundo refresh), líneas viejas duplicadas en `toggleLike` y el `// print("pidiendo el feed")` comentado entró en el commit.
+- **🧪 Tests 18/20:** 66/66 en verde antes del commit. Resta: a `test_refreshCompletes_replacesPosts` le faltaba `simulatePullToRefresh()` (crash `Index out of range`). Punto a favor: agregaste el `guard` con `XCTFail` al spy.
+- **🌿 Git 13/15:** rama, ⌘U en verde, commit y merge a `main`. Resta: el checklist marca "sin código comentado" ✅, pero el `print` comentado está en el commit.
+- **🧠 Conceptos 11/25:** P1 🟡 · P2 🟡 · P3 🔴 (sin respuesta) · P4 ✅ · P5 🔴 (sin respuesta)
+- **✨ Lo mejor:** describiste bien los síntomas ("no aparece el loading", "no imprime nada") y eso llevó directo a la línea faltante; P4 (quién debe guardar el like) es correcta.
+- **🎯 A reforzar:** responder **todas** las preguntas; revisar que el checklist refleje lo que de verdad hay en el commit.
 
 ---
 
@@ -96,7 +103,7 @@ Cada día se califica **después** de revisar el código final (tras las correcc
 2. **Copiar y pegar:** revisa lo pegado y no confíes solo en que compile.
 3. **Git:** haz commit **antes** de cambiar de rama.
 4. **Memoria (ARC):** `weak`, `strong` y retain cycles salieron dos veces (Día 1 P1 y Día 3 P1). En el Día 4 ya mejoró (P3 ✅), pero falta explicar la cadena completa del ciclo.
-5. **Preguntas incompletas:** en el Día 4 una quedó sin responder y otra respondió solo 1 de sus 3 partes. Contesta cada parte por separado.
+5. **Preguntas incompletas:** Día 4 (1 en blanco), Día 5 (2 en blanco) y Día 7 (2 en blanco). Es lo que más puntos te cuesta. Contesta cada parte por separado, aunque sea con lo que viste en el experimento.
 6. **Caracteres parecidos:** `.` en lugar de `·`, `*` en lugar de `✓`. Copia los símbolos de la guía.
 7. **Tests en rojo:** el Día 5 se hizo merge con 3 tests fallando y se modificó un test para que compilara. Regla: ⌘U en verde → commit → merge. ✅ Corregido en el Día 6.
 8. **Contar los tests:** si el total no coincide con la guía, `grep -rc "func test" NexoTests` y compara archivo por archivo (Día 6).
