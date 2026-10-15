@@ -19,12 +19,27 @@ nonisolated enum FeedLoaderError: Error, Equatable {
 // Recibe bundle y fileName en el init (inyeccion de dependencias por init):
 // Asi en los tests podemos pedirle un archivo que NO existe y probar el error.
 nonisolated struct MockFeedLoader: FeedLoader {
+    
+    
     private let bundle: Bundle
     private let fileName: String
+    // Segundos de espera, para simular la red. 0 por defecto: los tests no esperan
+    private let delay: TimeInterval
     
-    init(bundle: Bundle = .main, fileName: String = "feed") {
+    
+    init(bundle: Bundle = .main, fileName: String = "feed", delay: TimeInterval = 0) {
         self.bundle = bundle
         self.fileName = fileName
+        self.delay = delay
+    }
+    
+    // Cumple FeeLoader: hace el trabajo en un hilo de FONDO, despues de delat segundos
+    func load(completion: @escaping (Result<[Post], Error>) -> Void) {
+        let loader = self // copia del struct: la closure no captura nada mutable
+        DispatchQueue.global().asyncAfter(deadline: .now() + delay) {
+            // Result { try }: convierte "devuelve o lanza" en .success/.failure
+            completion(Result { try loader.load() })
+        }
     }
     
     // throws: esta función puede fallar y quien le llame DEBE usar try

@@ -12,5 +12,7 @@ import Foundation
 // El feed depende de ESTO, no de una clase concreta. Hoy lo cumple 'MockFeedLoader'
 // En el nivel Mid lo cumplira un loader que llama a NexoServer, y en los sets, un stub
 nonisolated protocol FeedLoader {
-    func load() throws -> [Post]
+    // 🟤 Completion handler ⚠️ Como en ImageLoader NO promete el hilo
+    // quien llama regresa al principal si va a tocar la UI
+    func load(completion: @escaping @Sendable (Result<[Post], Error>) -> Void)
 }

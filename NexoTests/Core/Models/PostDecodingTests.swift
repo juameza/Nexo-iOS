@@ -76,6 +76,18 @@ final class PostDecodingTests: XCTestCase {
         }
     }
     
+    func test_mockFeedLoader_loadWithCompletion_deliversPostsOffMainThread() {
+        let exp = expectation(description: "completion")
+        
+        MockFeedLoader().load { result in
+            XCTAssertFalse(Thread.isMainThread) // por eso el Feed usa DispatchQueue.main.async
+            XCTAssertEqual((try? result.get())?.count, 4)
+            exp.fulfill()
+        }
+        
+        wait(for: [exp], timeout: 1) // sin esto, el test terminara ANTES de que llegue al reespiuest
+    }
+    
     func test_decode_userWithAvatar_mapsAvatarURL() throws {
         let json = #"""
         { 

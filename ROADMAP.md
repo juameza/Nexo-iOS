@@ -513,3 +513,9 @@ Cada día pide: **"Día N"** y recibirás:
 - Hilo principal: `DispatchQueue.main.async` 🟤 vs `@MainActor` 🟢; `[weak …]` en closures asíncronas
 - El bug de la imagen equivocada en celdas recicladas: cancelar + `representedPostID`
 - Tests sin internet: spy y `URLProtocol` stub; 8 tests nuevos (58 en total)
+
+### Día 7 → ver [`Dias/Dia-07.md`](Dias/Dia-07.md)
+- `FeedLoader` asíncrono con completion handler 🟤 (vs síncrono y vs `async/await` 🟢) y retraso simulado
+- Estados de pantalla con `enum` (cargando / contenido / vacío / error): *make impossible states impossible*
+- Pull to refresh con `UIRefreshControl` y `#selector`; evitar peticiones duplicadas; `[weak self]` cuando el loader guarda la closure
+- MVC y el *Massive View Controller*; `FeedLoaderSpy`; 8 tests nuevos (66 en total)

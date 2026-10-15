@@ -13,50 +13,119 @@ import XCTest
 final class FeedViewControllerTests: XCTestCase {
     
     
-    func test_viewDidLoad_renderOneRowPerPost() throws {
-        let sut = try makeSUT(result: .success([.fixture(), .fixture(), .fixture()]))
+    // MARK: - Carga y estados
+    func test_viewDidLoad_requestsFeedOnce() throws {
+        let (_, loader) = try makeSUT()
+        XCTAssertEqual(loader.requestCount, 1)
+    }
+    
+    func test_viewDidLoad_showsLoadingUntilLoaderCompletes() throws{
+        let (sut, _) =  try makeSUT()
+        XCTAssertEqual(sut.state, .loading)
+        XCTAssertTrue(sut.tableView.backgroundView is UIActivityIndicatorView)
+        XCTAssertEqual(sut.tableView.numberOfRows(inSection: 0), 0)
+    }
+    
+    func test_loadCompletes_rendersOneRowPerPost() throws {
+        let (sut, loader) = try makeSUT()
+        loader.complete(with: .success([.fixture(), .fixture(), .fixture()]))
+        flushMainQueue()
         XCTAssertEqual(sut.tableView.numberOfRows(inSection: 0), 3)
         XCTAssertNil(sut.tableView.backgroundView)
+        
+        
     }
     
-    func test_viewDidLoad_loaderFails_showErrorAndNoRows() throws {
-        let sut = try makeSUT(result: .failure(FeedLoaderError.fileNotFound("x")))
+    func test_loadCompletesWithNoPosts_showsEmptyState() throws {
+        let (sut, loader) = try makeSUT()
+        loader.complete(with: .success([]))
+        flushMainQueue()
+        XCTAssertEqual(sut.state, .empty)
+        XCTAssertTrue(sut.tableView.backgroundView is UILabel)
+    }
+    
+    
+    func test_loadFails_showsErrorAndNoRows() throws{
+        let (sut, loader) = try makeSUT()
+        loader.complete(with: .failure(FeedLoaderError.fileNotFound("x")))
+        flushMainQueue()
+        // guard case: no nos importa el texto exacto, solo que se .failed
+        guard case .failed = sut.state else { return XCTFail("Se esperaba .faied, llego \(sut.state)")}
         XCTAssertEqual(sut.tableView.numberOfRows(inSection: 0), 0)
-        XCTAssertNotNil(sut.tableView.backgroundView)
+        
     }
     
-    // También es un test de humo: si la celda prototipo no tiene class/Identifier
-    // correctos, o un outlet esta roto, esto truena
+    func test_loadCompletes_rendersOnlyAfterMainQueueRuns() throws {
+        let (sut, loader) = try makeSUT()
+        loader.complete(with: .success([.fixture()]))
+        XCTAssertEqual(sut.state, .loading) // todavia no: DispatchQueue.main.async es mas tarde
+        flushMainQueue()
+        XCTAssertEqual(sut.tableView.numberOfRows(inSection: 0), 1)
+        
+        
+    }
+    
+    // MARK: - Pull to refresh
+    func test_pullToRefresh_requestsFeedAgain() throws {
+        let (sut, loader) = try makeSUT()
+        loader.complete(with: .success([.fixture()]))
+        flushMainQueue()
+        sut.simulatedPullToRefresh()
+        
+        XCTAssertEqual(loader.requestCount, 2)
+    }
+    
+    func test_pullToRefresh_whileLoading_doesNotRequestAgain() throws {
+        let (sut, loader) = try makeSUT() // la primer carga NO ha terminado
+        sut.simulatedPullToRefresh()
+        
+        XCTAssertEqual(loader.requestCount, 1)
+    }
+    
+    
+    func test_refreshCompletes_replacesPosts() throws {
+        let (sut, loader) = try makeSUT()
+        loader.complete(with: .success([.fixture()]), at: 0)
+        
+        flushMainQueue()
+        
+        sut.simulatedPullToRefresh()
+        loader.complete(with: .success([.fixture(), .fixture()]), at: 1)
+        
+        flushMainQueue()
+        
+        XCTAssertEqual(sut.tableView.numberOfRows(inSection: 0), 2)
+    }
+    
+    
+    // MARK: - Celdas y Memoria
     func test_cellForRow_returnsPostCell() throws {
-        let sut = try makeSUT(result: .success([.fixture(content: .text("Hola Nexo"))]))
-        let cell = sut.tableView(sut.tableView, cellForRowAt: IndexPath(row: 0, section: 0))
-        XCTAssertTrue(cell is PostCell)
+        let (sut, _) = try makeLoadedSUT(posts: [.fixture(content: .text("Hola Nexo"))])
+        XCTAssertNotNil(renderedCell(at: 0, in: sut))
     }
     
     func test_feed_isReleasedFromMemory() throws {
-        let sut = try makeSUT(result: .success([.fixture()]))
-        
-        // Le damos tamaño y forzamos el layout para que la TABLA cree y GUARDE sus celdas.
-        // Sin esto no existiria kla cadena tabla -> celda -> closure, y el test no detectaria el ciclo
-        sut.tableView.frame = CGRect(x: 0, y: 0,  width: 3990, height: 800)
+        let (sut, _) = try makeLoadedSUT(posts: [.fixture()])
+        // Tamaño + layout: la TABLA CREA y guarda sus celdas (cadena tabla -> celda -> closure, Día 4)
+        sut.tableView.frame = CGRect(x: 0, y: 0, width: 390, height: 800)
         sut.tableView.layoutIfNeeded()
         XCTAssertEqual(sut.tableView.visibleCells.count, 1)
         assertNoMemoryLeak(sut)
-        
     }
     
     // MARK: - Avatares
-    func test_cellForRow_requestsAuthorAvatar() throws{
-        let url = try XCTUnwrap(URL(string: "https://nexo.app/ana.png"))
-        let (sut, imageLoader) = try makeSUTWithSpy(posts: [.fixture(author: .fixture(avatarURL: url))])
-        
+    func test_cellForRow_requestsAuthorAvatar() throws {
+        let url = try XCTUnwrap(URL(string: "https: //nexo.app/ana.png"))
+        let (sut, imageLoader) = try makeLoadedSUT(posts: [.fixture(author: .fixture(avatarURL: url))])
         _ = renderedCell(at: 0, in: sut)
         
         XCTAssertEqual(imageLoader.requestedURLs, [url])
     }
     
+
+    
     func test_cellForRow_withoutAvatarURL_doesNotRequestAndShowsPlaceholder() throws {
-        let (sut, imageLoader) = try makeSUTWithSpy(posts: [.fixture(author: .fixture(avatarURL: nil))])
+        let (sut, imageLoader) = try makeLoadedSUT(posts: [.fixture(author: .fixture(avatarURL: nil))])
         
         let cell = renderedCell(at: 0, in: sut)
         
@@ -66,54 +135,57 @@ final class FeedViewControllerTests: XCTestCase {
     
     func test_avatarLoaded_showsImageOnlyAfterMainQueueRuns() throws {
         let url = try XCTUnwrap(URL(string: "https://nexo.app/ana.png"))
-        let (sut, imageLoader) = try makeSUTWithSpy(posts: [.fixture(author: .fixture(avatarURL: url))])
+        let (sut, imageLoader) = try makeLoadedSUT(posts: [.fixture(author: .fixture(avatarURL: url))])
+        
         let cell = try XCTUnwrap(renderedCell(at: 0, in: sut))
         let image = UIImage()
         
         imageLoader.complete(with: image)
-        
-        // Todavia NO: el Feed la mando con DispathQueue.main.async ("mas tarde")
         XCTAssertFalse(cell.displayedAvatar === image)
         
         flushMainQueue()
-        XCTAssertTrue(cell.displayedAvatar === image) // === : la MISMA instancia (Dia 1, P2)
+        XCTAssertTrue(cell.displayedAvatar === image)
     }
     
-    // El bug del concepto 4, reproducido sin red lenta y sin hacer scroll
+    // EL bug de la imagen equivocada (dia 6 concepto 4)
     func test_avatarLoaded_afterCellWasReused_isIgnored() throws {
         let urlA = try XCTUnwrap(URL(string: "https://nexo.app/a.png"))
         let postA = Post.fixture(author: .fixture(avatarURL: urlA))
         let postB = Post.fixture(author: .fixture(avatarURL: nil))
-        let (sut, imageLoader) = try makeSUTWithSpy(posts: [postA])
-        let cell = try XCTUnwrap(renderedCell(at: 0, in: sut)) // pide el avatar de A
+        let (sut, imageLoader) = try makeLoadedSUT(posts: [postA])
+        let cell = try XCTUnwrap(renderedCell(at: 0, in: sut))
         let imageOfA = UIImage()
         
-        // La tabla recicla la celda para el post B (lo mismo que hace al hacer scroll)
         cell.prepareForReuse()
         cell.configure(with: postB)
-        // ...y llega TARDE la imagen de A
         imageLoader.complete(with: imageOfA, at: 0)
         flushMainQueue()
         
-        XCTAssertEqual(imageLoader.cancelledURLs, [urlA])  // defensa #1
-        XCTAssertFalse(cell.displayedAvatar === imageOfA) // defensa # 2
+        XCTAssertEqual(imageLoader.cancelledURLs, [urlA]) // defensas #1
+        XCTAssertFalse(cell.displayedAvatar === imageOfA) // defensa #2
+        
     }
+    
     
     // MARK: - Helpers
-    // make System Under Test: un solo lugar para construir el Feed en todos los tests
-    private func makeSUT(result: Result<[Post], Error>, imageLoader: ImageLoader = ImageLoaderSpy()) throws -> FeedViewController {
+    // El Feed recien cargado, la peticion esta HECHA pero no contesta
+    private func makeSUT(imageLoader: ImageLoader = ImageLoaderSpy()) throws -> (FeedViewController, FeedLoaderSpy) {
+        let loader = FeedLoaderSpy()
         let storyboard = UIStoryboard(name: "Feed", bundle: Bundle(for: FeedViewController.self))
-        let sut = try XCTUnwrap(storyboard.instantiateInitialViewController{ coder in
-            FeedViewController(coder: coder, loader: FeedLoaderStub(result: result), imageLoader: imageLoader)
-                            
+        let sut = try XCTUnwrap(storyboard.instantiateInitialViewController { codee in
+            FeedViewController(coder: codee, loader: loader, imageLoader: imageLoader)
         })
         sut.loadViewIfNeeded()
-        return sut
+        return(sut, loader)
     }
     
-    private func makeSUTWithSpy(posts: [Post]) throws -> (FeedViewController, ImageLoaderSpy){
+    
+    // El Feed ya mostrando posts para los tests de celdas y avatares
+    private func makeLoadedSUT(posts: [Post]) throws -> (FeedViewController, ImageLoaderSpy){
         let imageLoader = ImageLoaderSpy()
-        let sut = try makeSUT(result: .success(posts), imageLoader: imageLoader)
+        let (sut, loader) = try makeSUT(imageLoader: imageLoader)
+        loader.complete(with: .success(posts))
+        flushMainQueue()
         return (sut, imageLoader)
     }
     
@@ -121,8 +193,7 @@ final class FeedViewControllerTests: XCTestCase {
         sut.tableView(sut.tableView, cellForRowAt: IndexPath(row: row, section: 0)) as? PostCell
     }
     
-    // Espera a que se ejecute lo que ya estaba encolado en el hilo principal
-    // La cola es FIFO: cuando corre NUESTRO bloque, el DispatchQueue.main.async del Feed ya corrio
+    // Espera a que corra lo que ya esta encolado en el hilo principal (Dia 6)
     private func flushMainQueue() {
         let exp = expectation(description: "main queue")
         DispatchQueue.main.async { exp.fulfill() }
@@ -131,11 +202,10 @@ final class FeedViewControllerTests: XCTestCase {
     
 }
 
-// STUB: un loader falso que devuelve exactamente lo que el test le pide
-// Gracias al protocolo FeedLoader, el Feed no nota la diferencia
-private struct FeedLoaderStub: FeedLoader {
-    let result: Result<[Post], Error>
-    func load() throws -> [Post] {
-        try result.get()  // .success-> post, .failure -> throw
+
+// Simula el gesto: el refreshControl: dispara su evento como si el usuario deslizara
+private extension FeedViewController {
+    func simulatedPullToRefresh() {
+        refreshControl?.sendActions(for: .valueChanged)
     }
 }
