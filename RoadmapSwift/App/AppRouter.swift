@@ -61,7 +61,7 @@ final class AppRouter {
         // Lo mismo que hace showFeed() del Login ayer, pero ahora aqui
         let storyboard = UIStoryboard(name: "Feed", bundle: nil)
         guard let feed = storyboard.instantiateInitialViewController(creator: { coder in
-            FeedViewController(coder: coder, loader: MockFeedLoader(delay: 1.5), imageLoader: RemoteImageLoader())
+            FeedViewController(coder: coder, viewModel: FeedViewModel(loader: MockFeedLoader(delay: 1.5)), imageLoader: RemoteImageLoader())
         }) else {
             assertionFailure("Feed.storyboard no tiene Initial View Controller")
             return UIViewController()

@@ -93,6 +93,7 @@ RoadmapSwift/                 ← repositorio (git)
 ### Herramientas
 - Xcode, breakpoints, LLDB básico (`po`, `v`)
 - Git (branches, commits, PRs)
+- **CI básico** 🟢: repo en GitHub, Pull Requests, GitHub Actions corriendo los tests en cada PR y `main` protegida (Día 9)
 
 ### Testing
 - **XCTest** 🟤: primeras pruebas unitarias de validadores (email, password)
@@ -447,6 +448,29 @@ docker compose up -d db                                            # Postgres en
 
 ---
 
+## 🎤 Entrevistas técnicas y casos prácticos
+
+Saber hacerlo no basta: a partir de Senior te evalúan por **explicar, defender y diseñar**. Por eso hay dos tipos de evaluación, con nota aparte en `Progreso.md`.
+
+### 🔹 Simulacro semanal (cada 7 días, ~30 min, dentro del mismo día)
+Al final de los Días 14, 21, 28, 35…: **5 preguntas tipo entrevista** sobre lo de esa semana, respondidas **sin abrir la guía ni el código**, más **1 mini ejercicio** (leer un fragmento y encontrar el bug, o explicar qué imprime).
+
+### 🔸 Entrevista de cierre de nivel (1 día completo, sin guía y sin IA)
+Para "subir de nivel" hay que sacar **≥ 80**. Si no, se repasa y se repite.
+
+| Al terminar | Día | Formato |
+|---|---|---|
+| Junior | 31 | Preguntas de fundamentos (ARC, valor vs referencia, opcionales, ciclo de vida) · **live coding** 45 min · **debugging** de una pantalla con 5 bugs escondidos |
+| Mid | 92 | Lo anterior + **caso práctico take-home** (3 h: app pequeña con red, estados y tests) · **code review** de un PR con errores |
+| Senior | 193 | **Mobile system design** (feed offline, chat en tiempo real) · concurrencia (actors, `Sendable`, data races) · performance con Instruments |
+| Staff | 254 | System design de **app + backend** · modularización y build times · escribir un **RFC** de 1–2 páginas con trade-offs |
+| Senior Staff | 305 | Estrategia de **migración a gran escala** (p. ej. Swift 5 → 6 en 1M de líneas) · decisiones entre equipos |
+| Principal | 356 | Presentación técnica de 20 min · visión técnica a 2 años · preguntas de comportamiento (método STAR) |
+
+> 📌 Cada entrevista de cierre es **un día extra**, así que los niveles se recorren 1 día después de cada una (por eso los números de esta tabla no coinciden exacto con el cronograma de abajo). En total son **6 días más**: Principal terminaría alrededor del **28 sep 2027** a ritmo diario.
+
+---
+
 ## 📅 Cronograma sugerido (a tu ritmo, ~1–2 h/día)
 
 | Fase | Nivel | Duración aprox. | Días |
@@ -519,3 +543,9 @@ Cada día pide: **"Día N"** y recibirás:
 - Estados de pantalla con `enum` (cargando / contenido / vacío / error): *make impossible states impossible*
 - Pull to refresh con `UIRefreshControl` y `#selector`; evitar peticiones duplicadas; `[weak self]` cuando el loader guarda la closure
 - MVC y el *Massive View Controller*; `FeedLoaderSpy`; 8 tests nuevos (66 en total)
+
+### Día 8 → ver [`Dias/Dia-08.md`](Dias/Dia-08.md)
+- **MVVM**: `FeedViewModel` sin UIKit (entradas, salidas y estado) y `FeedViewController` que solo dibuja y reenvía eventos
+- Binding con closures 🟤 (vs Delegate, KVO, Combine y `@Observable` 🟢); tres salidas: estado, carga y fila
+- Segundo retain cycle: vista ↔ ViewModel; helper compartido `flushMainQueue`
+- 13 tests del ViewModel sin storyboard; los del ViewController se enfocan en UI (77 en total)
