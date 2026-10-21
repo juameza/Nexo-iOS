@@ -33,8 +33,10 @@ Cada día se califica **después** de revisar el código final (tras las correcc
 | 5 | Raíz por código, tabs, `UserDefaults` y SwiftUI | 31 | 15 | 10 | 8 | 0 | **64** | ⚠️ Suficiente |
 | 6 | `URLSession`, GCD, caché y celdas recicladas | 37 | 18 | 15 | 16 | 0 | **86** | ✅ Muy bien |
 | 7 | Carga asíncrona, `enum State`, pull to refresh | 32 | 18 | 13 | 11 | 0 | **74** | 👍 Bien |
+| 8 | MVVM: `FeedViewModel` y binding por closures | 36 | 20 | 13 | 3 | 0 | **72** | 👍 Bien |
 
-**Promedio:** 74.6 · **Tendencia:** ➡️ el código y el proceso se mantienen; el Día 7 bajó por dos preguntas en blanco (10 puntos).
+**Promedio:** 74.3 · **Tendencia:** ➡️ código y tests en su mejor nivel (56/60 el Día 8); la nota se queda en 70s solo por las preguntas en blanco (Día 7: 2, Día 8: 4
+**Promedio:** 74.3 · **Tendencia:** ➡️ código y tests en su mejor nivel (56/60 el Día 8); la nota se queda en 70s solo por las preguntas en blanco (Día 7: 2, Día 8: 4).
 
 ---
 
@@ -96,6 +98,14 @@ Cada día se califica **después** de revisar el código final (tras las correcc
 - **✨ Lo mejor:** describiste bien los síntomas ("no aparece el loading", "no imprime nada") y eso llevó directo a la línea faltante; P4 (quién debe guardar el like) es correcta.
 - **🎯 A reforzar:** responder **todas** las preguntas; revisar que el checklist refleje lo que de verdad hay en el commit.
 
+### Día 8: 72/100 👍
+- **💻 Código 36/40:** `FeedViewModel` sin UIKit, las cuatro closures con `[weak self]`, `bind()` antes de `load()`, `refreshPulled` y el router correctos; sin `print` de experimentos ni código comentado. Restas: el texto de vacío sigue con `"Se"` sin acento (se había señalado), typos en comentarios (`Privaod`, `setStatus`, `ya hay un peticion`).
+- **🧪 Tests 20/20:** 77/77 en verde antes del commit, 13 + 13 en las clases del Feed, helper `flushMainQueue` compartido. Sin errores de copiado.
+- **🌿 Git 13/15:** rama, commit y merge a `main` correctos y repo limpio. Resta: el checklist quedó vacío y no se anotaron los resultados de los experimentos 6.1–6.3.
+- **🧠 Conceptos 3/25:** P1 🟡 · P2 🔴 (sin respuesta) · P3 🔴 (sin respuesta) · P4 🔴 (sin respuesta) · P5 🔴 (sin respuesta)
+- **✨ Lo mejor:** el refactor más limpio hasta ahora: código y tests al primer intento (salvo el nombre del parámetro en `bind`).
+- **🎯 A reforzar:** las preguntas. Con código y tests así, contestarlas a medias habría dado **84+**.
+
 ---
 
 ## 🔁 Patrones a vigilar
@@ -103,7 +113,7 @@ Cada día se califica **después** de revisar el código final (tras las correcc
 2. **Copiar y pegar:** revisa lo pegado y no confíes solo en que compile.
 3. **Git:** haz commit **antes** de cambiar de rama.
 4. **Memoria (ARC):** `weak`, `strong` y retain cycles salieron dos veces (Día 1 P1 y Día 3 P1). En el Día 4 ya mejoró (P3 ✅), pero falta explicar la cadena completa del ciclo.
-5. **Preguntas incompletas:** Día 4 (1 en blanco), Día 5 (2 en blanco) y Día 7 (2 en blanco). Es lo que más puntos te cuesta. Contesta cada parte por separado, aunque sea con lo que viste en el experimento.
+5. **Preguntas incompletas:** Día 4 (1 en blanco), Día 5 (2 en blanco), Día 7 (2 en blanco) y Día 8 (4 en blanco). Es lo que más puntos te cuesta. Contesta cada parte por separado, aunque sea con lo que viste en el experimento.
 6. **Caracteres parecidos:** `.` en lugar de `·`, `*` en lugar de `✓`. Copia los símbolos de la guía.
 7. **Tests en rojo:** el Día 5 se hizo merge con 3 tests fallando y se modificó un test para que compilara. Regla: ⌘U en verde → commit → merge. ✅ Corregido en el Día 6.
 8. **Contar los tests:** si el total no coincide con la guía, `grep -rc "func test" NexoTests` y compara archivo por archivo (Día 6).

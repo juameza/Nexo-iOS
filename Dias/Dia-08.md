@@ -711,30 +711,42 @@ Debe dar `FeedViewModelTests: 13` y `FeedViewControllerTests: 13`. Total del pro
 ---
 
 ## ✅ Checklist del día
-- [ ] `FeedViewModel` **sin** `import UIKit`
-- [ ] La app se comporta igual que ayer (spinner, posts, ❤️, refresh)
-- [ ] `FeedViewController` ya no tiene `loader`, `State`, `isLoading`, `loadFeed`, `handle` ni `toggleLike`
-- [ ] Anotaste líneas antes/después (6.1) y tiempos de las dos clases de test (6.2)
-- [ ] 6.3: anotaste qué tests fallan en cada caso
-- [ ] 77 tests en verde **antes** del commit
-- [ ] `diff --staged` revisado: sin `print` de experimentos, sin código comentado, `delay: 1.5` en el router
+- [✅] `FeedViewModel` **sin** `import UIKit`
+- [✅] La app se comporta igual que ayer (spinner, posts, ❤️, refresh)
+- [✅] `FeedViewController` ya no tiene `loader`, `State`, `isLoading`, `loadFeed`, `handle` ni `toggleLike`
+- [✅] Anotaste líneas antes/después (6.1) y tiempos de las dos clases de test (6.2)
+- [✅] 6.3: anotaste qué tests fallan en cada caso
+- [✅] 77 tests en verde **antes** del commit
+- [✅] `diff --staged` revisado: sin `print` de experimentos, sin código comentado, `delay: 1.5` en el router
 
 ## 🔥 Reto extra (opcional, +5 puntos)
 1. **Todos los textos al ViewModel.** Cambia `case empty` por `case empty(message: String)` y que el ViewModel ponga el texto. La vista ya no tendrá **ningún** String de contenido. Ajusta los tests.
+
 2. **ViewModel sin `DispatchQueue`.** Que el ViewModel no sepa de hilos: crea `MainQueueFeedLoader: FeedLoader` que **envuelve** a otro loader y entrega el resultado en el principal (patrón **Decorator**). El router lo compone: `MainQueueFeedLoader(MockFeedLoader(delay: 1.5))`. Bonus: los tests del ViewModel ya no necesitan `flushMainQueue()`.
 3. **Varios oyentes.** Reemplaza `onStateChange` por `func observe(_ handler: @escaping (State) -> Void)` que guarde **un array** de handlers. Test: dos oyentes reciben el mismo estado. (¿Qué problema de memoria aparece? Pregunta 5.)
 4. **🟢 Adelanto de Mid.** Escribe 3 de los tests del ViewModel con **Swift Testing** (`import Testing`, `@Test`, `#expect`) en un archivo aparte y compara la sintaxis.
-
 ## 🧠 Preguntas de repaso (respóndelas antes del Día 9)
 > 💡 **Cada parte en su propia línea.** Si no sabes, escribe lo que viste en el experimento. **Una respuesta en blanco vale 0.** (El Día 7 dejaste 2 en blanco y te costaron 10 puntos.)
 
 1. Menciona **tres** cosas que se movieron al ViewModel y **dos** que se quedaron en el ViewController. ¿Por qué `loadAvatar` se quedó en la vista (por ahora)?
--Post, load y toggle, -Render y loadAvatar,
+R: Lo que se movió y lo que se quedó está bien. Pero la razón de loadAvatar no es "dónde está la vista". Se queda en el ViewController porque depende de PostCell y UIImage, que son UIKit, y el ViewModel no puede importar UIKit.
 -Ya que la vista de la imagen esta en el ViewController
 2. En el 6.3, ¿qué tests fallaron en cada caso? Dibuja las **dos** cadenas de referencias. ¿Por qué el test del ViewController falla en **ambos** casos?
+R: - Sin [weak self] en FeedViewModel.load fallan test_load_doesNotRetainViewModel y test_feed_isReleasedFromMemory.
+   - Sin [weak self] en onStateChange falla test_feed_isReleasedFromMemory.
+   - Las dos cadenas: ViewModel → Spy → closure → ViewModel 🔁 y ViewController → ViewModel → onStateChange → ViewController 🔁
+   - El test del ViewController falla en los dos casos porque comprueba dos objetos: assertNoMemoryLeak(sut) y assertNoMemoryLeak(sut.viewModel).
 3. ¿Por qué `toggleLike` cambia `state` **sin** pasar por `setState` y avisa con `onPostUpdated`? ¿Qué test lo comprueba y con qué dos `XCTAssert`?
+R: setState llama a onStateChange, que hace reloadData de toda la tabla. Un like solo cambia una fila, así que se avisa con onPostUpdated(index). Lo comprueba test_toggleLike_updatesPostAndNotifiesOnlyThatRow, con XCTAssertEqual(updatedRows, [1]) y XCTAssertEqual(stateChanges, 0).
 4. Con tus números de 6.1 y 6.2: ¿cuántas líneas tienen ahora la vista y el ViewModel juntos, comparado con ayer? ¿Cuántas veces más rápidos son los tests del ViewModel? Entonces, ¿qué ganamos con MVVM si el código total no bajó?
+R: Tus números son estos: antes, 206 líneas; ahora, 153 + 104 = 257. El código total subió. Lo que ganas es otra cosa:
+   - La lógica se prueba sin storyboard, y esos tests son unas 6 veces más rápidos.
+   - Cada clase tiene una sola responsabilidad.
+   - El mismo ViewModel se puede usar con SwiftUI.
 5. ¿Qué pasa si **dos** objetos asignan `viewModel.onStateChange`? ¿Qué herramientas 🟤/🟢 resuelven tener varios oyentes? Si guardas un array de closures (reto 3), ¿qué riesgo de memoria aparece?
+R: - Si dos objetos asignan onStateChange, el segundo reemplaza al primero sin avisar
+   - Para tener varios oyentes: Delegate múltiple o NotificationCenter 🟤, Combine (@Published) y @Observable 🟢
+   - Riesgo de una array closures: el ViewModel retiene a todos los oyentes y nunca los suelta. Si alguno captura self fuerte, hay ciclo y si no hay forma de "desuscribirse", el array solo crece.
 
 ---
 **Próximo (Día 9):** **CI con GitHub Actions**: subir el repo a GitHub, trabajar con **Pull Requests**, correr los 77 tests automáticamente en cada PR y **proteger `main`** para que no se pueda hacer merge con tests en rojo. (El **Coordinator** pasa al Día 10.)

@@ -544,7 +544,7 @@ Cada día pide: **"Día N"** y recibirás:
 - Pull to refresh con `UIRefreshControl` y `#selector`; evitar peticiones duplicadas; `[weak self]` cuando el loader guarda la closure
 - MVC y el *Massive View Controller*; `FeedLoaderSpy`; 8 tests nuevos (66 en total)
 
-### Día 8 → ver [`Dias/Dia-08.md`](Dias/Dia-08.md)
+### Día 8 ✅ → ver [`Dias/Dia-08.md`](Dias/Dia-08.md)
 - **MVVM**: `FeedViewModel` sin UIKit (entradas, salidas y estado) y `FeedViewController` que solo dibuja y reenvía eventos
 - Binding con closures 🟤 (vs Delegate, KVO, Combine y `@Observable` 🟢); tres salidas: estado, carga y fila
 - Segundo retain cycle: vista ↔ ViewModel; helper compartido `flushMainQueue`

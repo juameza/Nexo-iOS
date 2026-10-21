@@ -84,7 +84,7 @@ final class FeedViewController: UITableViewController {
         case .loaded:
             tableView.backgroundView = nil
         case .empty:
-            tableView.backgroundView = makeMessageLabel("Aún no hay posts.\nSe el primero en publicar ✨")
+            tableView.backgroundView = makeMessageLabel("Aún no hay posts.\nSé el primero en publicar ✨")
         case .failed(let message):
             tableView.backgroundView = makeMessageLabel(message)
             
