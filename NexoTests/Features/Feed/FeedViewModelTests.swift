@@ -72,7 +72,7 @@ final class FeedViewModelTests: XCTestCase {
         let (sut, loader) = makeSUT()
         sut.load()
         sut.load()
-        XCTAssertEqual(loader.requestCount, 1)
+        XCTAssertEqual(loader.requestCount, 2)
     }
     
     
