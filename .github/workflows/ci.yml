@@ -1,0 +1,58 @@
+name: CI
+
+# Cuándo corre
+on:
+  pull_request:
+    branches: [main]      # cada PR hacia main (y cada push nuevo a ese PR)
+  push:
+    branches: [main]      # después del merge: confirma que main sigue en verde
+  workflow_dispatch:      # botón "Run workflow" para correrlo a mano
+
+# Si subes otro commit al mismo PR, cancela la corrida anterior (ahorra minutos)
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+# Mínimo privilegio: el CI solo necesita LEER el código
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Tests (iOS)        # ⚠️ este nombre es el "check" que exigirás en el Paso 6
+    runs-on: macos-26
+    timeout-minutes: 30      # si algo se cuelga, no quema minutos para siempre
+    env:
+      SCHEME: RoadmapSwift
+      DESTINATION: platform=iOS Simulator,name=iPhone 17,OS=26.5
+
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v7
+
+      - name: Seleccionar Xcode 26.6
+        run: sudo xcode-select -s /Applications/Xcode_26.6.app
+
+      - name: Mostrar versiones
+        run: |
+          xcodebuild -version
+          xcrun simctl list devices available | grep "iPhone 17"
+
+      - name: Compilar y correr los tests
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -project RoadmapSwift.xcodeproj \
+            -scheme "$SCHEME" \
+            -destination "$DESTINATION" \
+            -resultBundlePath TestResults.xcresult \
+            CODE_SIGNING_ALLOWED=NO \
+            | xcbeautify --renderer github-actions
+
+      - name: Subir resultados si algo falló
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: TestResults
+          path: TestResults.xcresult
+          retention-days: 7
