@@ -408,6 +408,7 @@ git fetch --prune                 # limpia la referencia a la rama remota borrad
   - ✅ **Restrict deletions** (nadie borra `main`)
   - ✅ **Block force pushes** (nadie reescribe la historia de `main`)
   - ✅ **Require a pull request before merging** → *Required approvals:* **0** (trabajas solo; en un equipo serían 1–2)
+    - Las demás opciones de esta sección déjalas como vengan. *Require an additional approval for unattributed Copilot pull requests* viene marcada: **déjala**. Solo aplica a PRs que abre el agente de Copilot por su cuenta, y con 0 aprobaciones no tiene efecto.
   - ✅ **Require status checks to pass** → **Add checks** → escribe `Tests (iOS)` y elígelo (fuente: GitHub Actions)
     - ✅ **Require branches to be up to date before merging**
 - **Create**.
