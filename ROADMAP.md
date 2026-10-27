@@ -549,3 +549,9 @@ Cada día pide: **"Día N"** y recibirás:
 - Binding con closures 🟤 (vs Delegate, KVO, Combine y `@Observable` 🟢); tres salidas: estado, carga y fila
 - Segundo retain cycle: vista ↔ ViewModel; helper compartido `flushMainQueue`
 - 13 tests del ViewModel sin storyboard; los del ViewController se enfocan en UI (77 en total)
+
+### Día 9 → ver [`Dias/Dia-09.md`](Dias/Dia-09.md)
+- Repo en **GitHub** (SSH, `origin`, `push`/`pull`) y flujo con **Pull Requests**
+- **CI con GitHub Actions** 🟢 (vs Jenkins/Bitrise 🟤): 77 tests en cada PR en una Mac `macos-26`, scheme compartido, `CODE_SIGNING_ALLOWED=NO`, `set -o pipefail`
+- **Ruleset** 🟢 (vs *branch protection* 🟤): `main` solo acepta PRs con el check `Tests (iOS)` en verde
+- `scripts/test.sh` (el mismo comando que el CI) y primer PR con código: `UIWindow(windowScene:)`
